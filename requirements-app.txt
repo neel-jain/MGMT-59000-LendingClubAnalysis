@@ -1,0 +1,41 @@
+# requirements-app.txt
+# ======================
+# Phase 6: lean, DEPLOYMENT-ONLY dependency set for running the Streamlit
+# dashboard (`streamlit run app/app.py`) against already-serialized
+# artifacts (models, preprocessing pipeline, explainability/segmentation
+# reports). Excludes everything only needed for developing the project
+# (Jupyter, notebook kernels, pytest, pyflakes) to keep the deployed
+# image/environment smaller and faster to build.
+#
+# For local development (running notebooks, the full pytest suite,
+# regenerating any Phase 1-4B artifact), use the full `requirements.txt`
+# instead. Both files are kept in sync manually since deployment
+# platforms typically install from exactly one requirements file.
+
+# Core data handling
+pandas>=2.1,<3.0
+numpy>=1.26,<2.0
+
+# Machine learning (used by the serialized models + engines at inference time)
+scikit-learn>=1.4,<1.6
+xgboost>=2.0,<3.0
+
+# Statistics (used by src/eda_utils.py, imported by the Exploratory Analysis page)
+scipy>=1.11,<2.0
+statsmodels>=0.14,<1.0
+
+# Explainability (ExplainabilityEngine / SHAP)
+shap>=0.45,<1.0
+
+# Borrower segmentation (SegmentationEngine's t-SNE/UMAP visualizations)
+umap-learn>=0.5,<1.0
+
+# Serialization (loading models/pipelines/reports)
+joblib>=1.3,<2.0
+
+# Visualization (every chart rendered via st.pyplot)
+matplotlib>=3.8,<4.0
+seaborn>=0.13,<1.0
+
+# The application itself
+streamlit>=1.35,<2.0

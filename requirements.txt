@@ -1,0 +1,42 @@
+# Core data handling
+pandas>=2.1,<3.0
+numpy>=1.26,<2.0
+
+# Machine learning
+scikit-learn>=1.4,<1.6
+xgboost>=2.0,<3.0
+
+# Statistics (Phase 2 EDA: correlation/chi-square/t-test/ANOVA, VIF)
+scipy>=1.11,<2.0
+statsmodels>=0.14,<1.0
+
+# Explainability (Phase 4A: SHAP-based global/local model explanations)
+shap>=0.45,<1.0
+
+# Borrower segmentation (Phase 4B: dimensionality reduction for visualization)
+umap-learn>=0.5,<1.0
+
+# Serialization
+joblib>=1.3,<2.0
+
+# Visualization (EDA + Streamlit charts)
+matplotlib>=3.8,<4.0
+seaborn>=0.13,<1.0
+
+# Deployment (Phase 5: multipage Streamlit dashboard)
+streamlit>=1.35,<2.0
+
+# Notebook environment
+jupyter>=1.0,<2.0
+notebook>=7.0,<8.0
+ipykernel>=6.29,<7.0
+
+# Testing
+pytest>=8.0,<9.0
+
+# Phase 6 dependency audit: imbalanced-learn, plotly, and python-dateutil
+# were declared since Phase 1 but never actually imported anywhere in
+# src/, app/, or tests/ -- removed here rather than left as unused dead
+# weight. See requirements-app.txt for the lean, deployment-only subset
+# (excludes jupyter/notebook/ipykernel/pytest, none of which the running
+# application needs).

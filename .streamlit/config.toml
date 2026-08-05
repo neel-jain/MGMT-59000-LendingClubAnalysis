@@ -1,0 +1,16 @@
+[theme]
+# Professional lending-analytics palette: navy primary, clean white
+# background, muted slate secondary background for cards/sidebar.
+primaryColor = "#2E86AB"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F4F6F8"
+textColor = "#1A2B3C"
+font = "sans serif"
+
+[server]
+headless = true
+runOnSave = true
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
