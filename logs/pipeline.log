@@ -1,0 +1,276 @@
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | __main__ | PHASE 1 PIPELINE START
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:14:10 | INFO     | src.utils | Loaded raw dataset from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/raw/lendingclub_indiana_raw.csv — shape=(2015, 33)
+2026-08-04 18:14:10 | INFO     | src.utils | Validation complete: 2015 rows, 33 columns, 15 duplicate rows, 5 columns with missing values, 0 missing expected columns.
+2026-08-04 18:14:10 | INFO     | src.utils | Beginning full cleaning pipeline on raw shape (2015, 33)
+2026-08-04 18:14:10 | INFO     | src.utils | Filtered to state='IN': 2015 -> 1823 rows.
+2026-08-04 18:14:10 | INFO     | src.utils | Removed 13 duplicate rows (1823 -> 1810).
+2026-08-04 18:14:10 | INFO     | src.utils | Converted 'int_rate' to numeric (0 NaNs after conversion).
+2026-08-04 18:14:10 | INFO     | src.utils | Converted 'revol_util' to numeric (0 NaNs after conversion).
+2026-08-04 18:14:10 | INFO     | src.utils | Parsed 'emp_length' -> 'emp_length_years' (162 unmapped/missing values -> NaN).
+2026-08-04 18:14:10 | INFO     | src.utils | Built target 'default_flag' from 'loan_status': kept 1500/1810 rows (310 dropped as non-final status). Class balance: {0: 0.743, 1: 0.257}
+2026-08-04 18:14:10 | INFO     | src.utils | Dropped 13 excluded columns: ['id', 'member_id', 'emp_title', 'url', 'desc', 'title', 'zip_code', 'addr_state', 'issue_d', 'earliest_cr_line', 'sub_grade', 'loan_status', 'emp_length']
+2026-08-04 18:14:10 | INFO     | src.utils | Cleaning pipeline complete. Final shape: (1500, 22)
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (1500, 22) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/processed/lendingclub_indiana_cleaned.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Split complete — train=1049 (69.9%), val=226 (15.1%), test=225 (15.0%). Default rate — train=0.257, val=0.257, test=0.258
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (1049, 21) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (226, 21) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (225, 21) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (1049, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (226, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv
+2026-08-04 18:14:10 | INFO     | src.utils | Saved dataframe with shape (225, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv
+2026-08-04 18:14:10 | INFO     | src.utils | All six train/validation/test split artifacts saved.
+2026-08-04 18:14:10 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:14:10 | INFO     | __main__ | Preprocessor fit complete. Output feature count: 34
+2026-08-04 18:14:10 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/pipelines/preprocessing_pipeline.joblib
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | __main__ | PHASE 1 PIPELINE COMPLETE
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | __main__ | PHASE 3 PIPELINE START
+2026-08-04 18:14:10 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:10 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:14:10 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:10 | INFO     | src.model_utils | Training and evaluating: Logistic Regression
+2026-08-04 18:14:10 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:10 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:14:10 | INFO     | src.model_utils | Starting GridSearchCV over 24 candidate combinations.
+2026-08-04 18:14:16 | INFO     | src.model_utils | GridSearchCV complete in 5.95s. Best roc_auc=0.5116. Best params: {'classifier__C': 0.1, 'classifier__class_weight': None, 'classifier__penalty': 'l2', 'classifier__solver': 'liblinear'}
+2026-08-04 18:14:16 | INFO     | src.model_utils | Logistic Regression complete. Test ROC-AUC=0.4668 | Recommended threshold=0.15 | Training time=0.019s | Search time=5.9s
+2026-08-04 18:14:16 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/logistic_regression_model.joblib
+2026-08-04 18:14:16 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:16 | INFO     | src.model_utils | Training and evaluating: Random Forest
+2026-08-04 18:14:16 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:16 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:14:16 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=20.
+2026-08-04 18:14:41 | INFO     | src.model_utils | RandomizedSearchCV complete in 24.97s. Best roc_auc=0.5322. Best params: {'classifier__n_estimators': 200, 'classifier__min_samples_split': 20, 'classifier__min_samples_leaf': 8, 'classifier__max_features': 'log2', 'classifier__max_depth': 16, 'classifier__class_weight': 'balanced_subsample'}
+2026-08-04 18:14:43 | INFO     | src.model_utils | Random Forest complete. Test ROC-AUC=0.4975 | Recommended threshold=0.30 | Training time=0.343s | Search time=25.0s
+2026-08-04 18:14:43 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/random_forest_model.joblib
+2026-08-04 18:14:43 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:43 | INFO     | src.model_utils | Training and evaluating: XGBoost
+2026-08-04 18:14:43 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:14:43 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:14:43 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=30.
+2026-08-04 18:14:49 | INFO     | src.model_utils | RandomizedSearchCV complete in 5.70s. Best roc_auc=0.5365. Best params: {'classifier__subsample': 0.7, 'classifier__scale_pos_weight': 1.0, 'classifier__reg_lambda': 0.1, 'classifier__reg_alpha': 0, 'classifier__n_estimators': 150, 'classifier__min_child_weight': 1, 'classifier__max_depth': 4, 'classifier__learning_rate': 0.2, 'classifier__gamma': 0.1, 'classifier__colsample_bytree': 0.8}
+2026-08-04 18:14:49 | INFO     | src.model_utils | XGBoost complete. Test ROC-AUC=0.4869 | Recommended threshold=0.10 | Training time=0.178s | Search time=5.7s
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/evaluation_metrics.joblib
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/cv_results.joblib
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/probability_predictions.joblib
+2026-08-04 18:14:49 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:14:49 | INFO     | __main__ | All Phase 3 artifacts serialized.
+2026-08-04 18:14:49 | INFO     | __main__ | ======================================================================
+2026-08-04 18:14:49 | INFO     | __main__ | PHASE 3 PIPELINE COMPLETE
+2026-08-04 18:14:49 | INFO     | __main__ | ======================================================================
+2026-08-04 18:15:33 | INFO     | src.explainability | Loading XGBoost pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv — shape=(1049, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv — shape=(226, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv — shape=(225, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv — shape=(1049, 1)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv — shape=(226, 1)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv — shape=(225, 1)
+2026-08-04 18:15:33 | INFO     | src.configurable_thresholds | No risk threshold configuration found at /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json -- using built-in defaults and writing them to disk for future editing.
+2026-08-04 18:15:33 | INFO     | src.configurable_thresholds | Saved risk threshold configuration to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:15:33 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:15:33 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.10
+2026-08-04 18:15:33 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=34, background_n=200
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv — shape=(1049, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv — shape=(226, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv — shape=(225, 21)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv — shape=(1049, 1)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv — shape=(226, 1)
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv — shape=(225, 1)
+2026-08-04 18:15:33 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability/shap_feature_importance.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability/business_summary_templates.joblib
+2026-08-04 18:15:33 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability/model_metadata.joblib
+2026-08-04 18:15:33 | INFO     | src.interpretation_utils | Skipping fairness row for home_ownership=OTHER (n=2 < 10).
+2026-08-04 18:15:33 | INFO     | src.interpretation_utils | Skipping fairness row for purpose=small_business (n=8 < 10).
+2026-08-04 18:15:33 | INFO     | src.interpretation_utils | Skipping fairness row for grade=G (n=6 < 10).
+2026-08-04 18:15:33 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability/fairness_report.joblib
+2026-08-04 18:15:35 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability/feature_interaction_summary.joblib
+2026-08-04 18:15:35 | INFO     | src.explainability | All Phase 4A explainability artifacts persisted to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/explainability
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv — shape=(1049, 21)
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv — shape=(226, 21)
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv — shape=(225, 21)
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv — shape=(1049, 1)
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv — shape=(226, 1)
+2026-08-04 18:16:08 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv — shape=(225, 1)
+2026-08-04 18:16:08 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:16:08 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:16:08 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-04 18:16:08 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 1049 borrowers.
+2026-08-04 18:16:08 | INFO     | src.cluster_analysis | Clipped 4 outlier values in 'annual_inc' to [-60861.29, 162750.59].
+2026-08-04 18:16:08 | INFO     | src.cluster_analysis | Clipped 147 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-04 18:16:08 | INFO     | src.cluster_analysis | Clipped 93 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-04 18:16:08 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=2: inertia=12819.4, silhouette=0.060, calinski_harabasz=66.8, davies_bouldin=3.892
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=3: inertia=12172.0, silhouette=0.059, calinski_harabasz=62.9, davies_bouldin=3.502
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=4: inertia=11687.3, silhouette=0.053, calinski_harabasz=58.1, davies_bouldin=3.090
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=5: inertia=11275.0, silhouette=0.057, calinski_harabasz=54.7, davies_bouldin=2.904
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=6: inertia=10937.3, silhouette=0.056, calinski_harabasz=51.5, davies_bouldin=2.720
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=7: inertia=10647.8, silhouette=0.061, calinski_harabasz=48.8, davies_bouldin=2.591
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | k=8: inertia=10415.5, silhouette=0.059, calinski_harabasz=46.0, davies_bouldin=2.523
+2026-08-04 18:16:09 | INFO     | src.risk_scoring | Loading XGBoost pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:16:09 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.10
+2026-08-04 18:16:09 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 0: 'Prime Borrowers', 2: 'High Debt Borrowers', 3: 'Moderate Risk Borrowers'}
+2026-08-04 18:16:09 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 0: 'Prime Borrowers', 2: 'High Debt Borrowers', 3: 'Moderate Risk Borrowers'}
+2026-08-04 18:16:09 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/clustering_model.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/clustering_preprocessor.joblib
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | Clipped 4 outlier values in 'annual_inc' to [-60861.29, 162750.59].
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | Clipped 147 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-04 18:16:09 | INFO     | src.cluster_analysis | Clipped 93 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/cluster_centroids.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/segment_definitions.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/cluster_metadata.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/segment_profiles.joblib
+2026-08-04 18:16:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation/optimal_k_analysis.joblib
+2026-08-04 18:16:09 | INFO     | src.segmentation_engine | All Phase 4B segmentation artifacts persisted to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/segmentation / /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models
+2026-08-04 18:17:03 | INFO     | app | Streamlit session started. Production model=xgboost, project root=/Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/processed/lendingclub_indiana_cleaned.csv — shape=(1500, 22)
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/evaluation_metrics.joblib
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/cv_results.joblib
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/probability_predictions.joblib
+2026-08-04 18:17:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:17:04 | INFO     | src.explainability | Loading XGBoost pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv — shape=(1049, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv — shape=(226, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv — shape=(225, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv — shape=(1049, 1)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv — shape=(226, 1)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv — shape=(225, 1)
+2026-08-04 18:17:04 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:17:04 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:17:04 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.10
+2026-08-04 18:17:04 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=34, background_n=200
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv — shape=(1049, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv — shape=(226, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv — shape=(225, 21)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv — shape=(1049, 1)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv — shape=(226, 1)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded dataframe from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv — shape=(225, 1)
+2026-08-04 18:17:04 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:18:00 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:18:00 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:18:00 | INFO     | src.risk_scoring | Loading Logistic Regression pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/logistic_regression_model.joblib
+2026-08-04 18:18:00 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/logistic_regression_model.joblib
+2026-08-04 18:18:00 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:18:00 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=Logistic Regression, decision_threshold=0.15
+2026-08-04 18:18:24 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:18:24 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:18:24 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-04 18:18:24 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 1049 borrowers.
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | Clipped 4 outlier values in 'annual_inc' to [-60861.29, 162750.59].
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | Clipped 147 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | Clipped 93 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | k=2: inertia=12819.4, silhouette=0.060, calinski_harabasz=66.8, davies_bouldin=3.892
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | k=3: inertia=12172.0, silhouette=0.059, calinski_harabasz=62.9, davies_bouldin=3.502
+2026-08-04 18:18:24 | INFO     | src.cluster_analysis | k=4: inertia=11687.3, silhouette=0.053, calinski_harabasz=58.1, davies_bouldin=3.090
+2026-08-04 18:18:25 | INFO     | src.cluster_analysis | k=5: inertia=11275.0, silhouette=0.057, calinski_harabasz=54.7, davies_bouldin=2.904
+2026-08-04 18:18:25 | INFO     | src.cluster_analysis | k=6: inertia=10937.3, silhouette=0.056, calinski_harabasz=51.5, davies_bouldin=2.720
+2026-08-04 18:18:25 | INFO     | src.cluster_analysis | k=7: inertia=10647.8, silhouette=0.061, calinski_harabasz=48.8, davies_bouldin=2.591
+2026-08-04 18:18:25 | INFO     | src.cluster_analysis | k=8: inertia=10415.5, silhouette=0.059, calinski_harabasz=46.0, davies_bouldin=2.523
+2026-08-04 18:18:25 | INFO     | src.risk_scoring | Loading XGBoost pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:18:25 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:18:25 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:18:25 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.10
+2026-08-04 18:18:25 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 0: 'Prime Borrowers', 2: 'High Debt Borrowers', 3: 'Moderate Risk Borrowers'}
+2026-08-04 18:18:25 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 0: 'Prime Borrowers', 2: 'High Debt Borrowers', 3: 'Moderate Risk Borrowers'}
+2026-08-04 18:19:03 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:19:05 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:19:58 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/risk_threshold_config.json
+2026-08-04 18:19:58 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-04 18:19:58 | INFO     | src.risk_scoring | Loading XGBoost pipeline from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:19:58 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:19:58 | INFO     | src.utils | Loaded serialized object from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:19:58 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.10
+2026-08-04 18:20:05 | INFO     | __main__ | Prediction requested: model=xgboost, loan_amnt=21181, grade=C
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 4 outlier values in 'annual_inc' to [-60861.29, 162750.59].
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 147 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 93 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Fitted PCA(n_components=2): explained variance ratio = [0.089 0.086] (total 17.5%)
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 4 outlier values in 'annual_inc' to [-60861.29, 162750.59].
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 147 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-04 18:20:09 | INFO     | src.cluster_analysis | Clipped 93 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-04 18:20:12 | INFO     | src.cluster_analysis | Fitted t-SNE on 1000 samples (perplexity=30.0).
+2026-08-04 18:30:08 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:08 | INFO     | __main__ | PHASE 1 PIPELINE START
+2026-08-04 18:30:08 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:08 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:30:08 | INFO     | src.utils | Loaded raw dataset from /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/raw/lendingclub_indiana_raw.csv — shape=(37515, 151)
+2026-08-04 18:30:09 | INFO     | src.utils | Validation complete: 37515 rows, 151 columns, 0 duplicate rows, 102 columns with missing values, 0 missing expected columns.
+2026-08-04 18:30:09 | INFO     | src.utils | Beginning full cleaning pipeline on raw shape (37515, 151)
+2026-08-04 18:30:09 | INFO     | src.utils | Filtered to state='IN': 37515 -> 37515 rows.
+2026-08-04 18:30:09 | INFO     | src.utils | Removed 0 duplicate rows (37515 -> 37515).
+2026-08-04 18:30:09 | INFO     | src.utils | Converted 'int_rate' to numeric (0 NaNs after conversion).
+2026-08-04 18:30:09 | INFO     | src.utils | Converted 'revol_util' to numeric (29 NaNs after conversion).
+2026-08-04 18:30:09 | INFO     | src.utils | Parsed 'emp_length' -> 'emp_length_years' (2534 unmapped/missing values -> NaN).
+2026-08-04 18:30:09 | INFO     | src.utils | Built target 'default_flag' from 'loan_status': kept 21716/37515 rows (15799 dropped as non-final status). Class balance: {0: 0.786, 1: 0.214}
+2026-08-04 18:30:09 | INFO     | src.utils | Dropped 13 excluded columns: ['id', 'member_id', 'emp_title', 'url', 'desc', 'title', 'zip_code', 'addr_state', 'issue_d', 'earliest_cr_line', 'sub_grade', 'loan_status', 'emp_length']
+2026-08-04 18:30:09 | INFO     | src.utils | Cleaning pipeline complete. Final shape: (21716, 140)
+2026-08-04 18:30:10 | INFO     | src.utils | Saved dataframe with shape (21716, 140) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/processed/lendingclub_indiana_cleaned.csv
+2026-08-04 18:30:10 | INFO     | src.utils | Split complete — train=15200 (70.0%), val=3258 (15.0%), test=3258 (15.0%). Default rate — train=0.214, val=0.214, test=0.214
+2026-08-04 18:30:11 | INFO     | src.utils | Saved dataframe with shape (15200, 139) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_train.csv
+2026-08-04 18:30:11 | INFO     | src.utils | Saved dataframe with shape (3258, 139) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_val.csv
+2026-08-04 18:30:12 | INFO     | src.utils | Saved dataframe with shape (3258, 139) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/X_test.csv
+2026-08-04 18:30:12 | INFO     | src.utils | Saved dataframe with shape (15200, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_train.csv
+2026-08-04 18:30:12 | INFO     | src.utils | Saved dataframe with shape (3258, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_val.csv
+2026-08-04 18:30:12 | INFO     | src.utils | Saved dataframe with shape (3258, 1) to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/data/splits/y_test.csv
+2026-08-04 18:30:12 | INFO     | src.utils | All six train/validation/test split artifacts saved.
+2026-08-04 18:30:12 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:30:12 | INFO     | __main__ | Preprocessor fit complete. Output feature count: 41
+2026-08-04 18:30:12 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/pipelines/preprocessing_pipeline.joblib
+2026-08-04 18:30:12 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:12 | INFO     | __main__ | PHASE 1 PIPELINE COMPLETE
+2026-08-04 18:30:12 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:12 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:12 | INFO     | __main__ | PHASE 3 PIPELINE START
+2026-08-04 18:30:12 | INFO     | __main__ | ======================================================================
+2026-08-04 18:30:12 | INFO     | src.utils | Verified 11 project directories exist.
+2026-08-04 18:30:12 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:30:12 | INFO     | src.model_utils | Training and evaluating: Logistic Regression
+2026-08-04 18:30:12 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:30:12 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:30:12 | INFO     | src.model_utils | Starting GridSearchCV over 24 candidate combinations.
+2026-08-04 18:30:30 | INFO     | src.model_utils | GridSearchCV complete in 17.98s. Best roc_auc=0.7071. Best params: {'classifier__C': 0.01, 'classifier__class_weight': None, 'classifier__penalty': 'l2', 'classifier__solver': 'liblinear'}
+2026-08-04 18:30:33 | INFO     | src.model_utils | Logistic Regression complete. Test ROC-AUC=0.7054 | Recommended threshold=0.15 | Training time=0.092s | Search time=18.0s
+2026-08-04 18:30:33 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/logistic_regression_model.joblib
+2026-08-04 18:30:33 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:30:33 | INFO     | src.model_utils | Training and evaluating: Random Forest
+2026-08-04 18:30:33 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:30:33 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:30:33 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=20.
+2026-08-04 18:33:06 | INFO     | src.model_utils | RandomizedSearchCV complete in 152.38s. Best roc_auc=0.7081. Best params: {'classifier__n_estimators': 500, 'classifier__min_samples_split': 2, 'classifier__min_samples_leaf': 8, 'classifier__max_features': 'sqrt', 'classifier__max_depth': 12, 'classifier__class_weight': 'balanced_subsample'}
+2026-08-04 18:34:27 | INFO     | src.model_utils | Random Forest complete. Test ROC-AUC=0.7061 | Recommended threshold=0.40 | Training time=2.731s | Search time=152.4s
+2026-08-04 18:34:27 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/random_forest_model.joblib
+2026-08-04 18:34:27 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:34:27 | INFO     | src.model_utils | Training and evaluating: XGBoost
+2026-08-04 18:34:27 | INFO     | src.model_utils | ======================================================================
+2026-08-04 18:34:27 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-04 18:34:27 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=30.
+2026-08-04 18:34:59 | INFO     | src.model_utils | RandomizedSearchCV complete in 31.54s. Best roc_auc=0.7076. Best params: {'classifier__subsample': 0.8, 'classifier__scale_pos_weight': 1.0, 'classifier__reg_lambda': 1.0, 'classifier__reg_alpha': 0.01, 'classifier__n_estimators': 350, 'classifier__min_child_weight': 3, 'classifier__max_depth': 4, 'classifier__learning_rate': 0.01, 'classifier__gamma': 0, 'classifier__colsample_bytree': 1.0}
+2026-08-04 18:35:09 | INFO     | src.model_utils | XGBoost complete. Test ROC-AUC=0.7041 | Recommended threshold=0.20 | Training time=0.811s | Search time=31.5s
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/models/xgboost_model.joblib
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/evaluation_metrics.joblib
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/cv_results.joblib
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/feature_importance.joblib
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/probability_predictions.joblib
+2026-08-04 18:35:09 | INFO     | src.utils | Serialized object to /Users/evanmay/Desktop/Final Project/Claude Code Output Phases/Phase 7/mgmt590_capstone/reports/threshold_analysis.joblib
+2026-08-04 18:35:09 | INFO     | __main__ | All Phase 3 artifacts serialized.
+2026-08-04 18:35:09 | INFO     | __main__ | ======================================================================
+2026-08-04 18:35:09 | INFO     | __main__ | PHASE 3 PIPELINE COMPLETE
+2026-08-04 18:35:09 | INFO     | __main__ | ======================================================================

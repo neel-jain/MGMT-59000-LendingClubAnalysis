@@ -11,27 +11,6 @@ venv/
 .venv/
 env/
 
-# --- Data & model artifacts (regenerable; exclude from version control) ---
-data/raw/*
-!data/raw/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-data/splits/*
-!data/splits/.gitkeep
-models/*
-!models/.gitkeep
-pipelines/*
-!pipelines/.gitkeep
-reports/*
-!reports/.gitkeep
-!reports/explainability/
-reports/explainability/*
-!reports/explainability/.gitkeep
-!reports/segmentation/
-reports/segmentation/*
-!reports/segmentation/.gitkeep
-logs/*
-!logs/.gitkeep
 
 # --- OS / editor ---
 .DS_Store
