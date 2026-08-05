@@ -1,42 +1,41 @@
+# requirements-app.txt
+# ======================
+# Phase 6: lean, DEPLOYMENT-ONLY dependency set for running the Streamlit
+# dashboard (`streamlit run app/app.py`) against already-serialized
+# artifacts (models, preprocessing pipeline, explainability/segmentation
+# reports). Excludes everything only needed for developing the project
+# (Jupyter, notebook kernels, pytest, pyflakes) to keep the deployed
+# image/environment smaller and faster to build.
+#
+# For local development (running notebooks, the full pytest suite,
+# regenerating any Phase 1-4B artifact), use the full `requirements.txt`
+# instead. Both files are kept in sync manually since deployment
+# platforms typically install from exactly one requirements file.
+
 # Core data handling
 pandas>=2.1,<3.0
 numpy>=1.26,<2.0
 
-# Machine learning
+# Machine learning (used by the serialized models + engines at inference time)
 scikit-learn>=1.4,<1.6
 xgboost>=2.0,<3.0
 
-# Statistics (Phase 2 EDA: correlation/chi-square/t-test/ANOVA, VIF)
+# Statistics (used by src/eda_utils.py, imported by the Exploratory Analysis page)
 scipy>=1.11,<2.0
 statsmodels>=0.14,<1.0
 
-# Explainability (Phase 4A: SHAP-based global/local model explanations)
+# Explainability (ExplainabilityEngine / SHAP)
 shap>=0.45,<1.0
 
-# Borrower segmentation (Phase 4B: dimensionality reduction for visualization)
+# Borrower segmentation (SegmentationEngine's t-SNE/UMAP visualizations)
 umap-learn>=0.5,<1.0
 
-# Serialization
+# Serialization (loading models/pipelines/reports)
 joblib>=1.3,<2.0
 
-# Visualization (EDA + Streamlit charts)
+# Visualization (every chart rendered via st.pyplot)
 matplotlib>=3.8,<4.0
 seaborn>=0.13,<1.0
 
-# Deployment (Phase 5: multipage Streamlit dashboard)
+# The application itself
 streamlit>=1.35,<2.0
-
-# Notebook environment
-jupyter>=1.0,<2.0
-notebook>=7.0,<8.0
-ipykernel>=6.29,<7.0
-
-# Testing
-pytest>=8.0,<9.0
-
-# Phase 6 dependency audit: imbalanced-learn, plotly, and python-dateutil
-# were declared since Phase 1 but never actually imported anywhere in
-# src/, app/, or tests/ -- removed here rather than left as unused dead
-# weight. See requirements-app.txt for the lean, deployment-only subset
-# (excludes jupyter/notebook/ipykernel/pytest, none of which the running
-# application needs).
