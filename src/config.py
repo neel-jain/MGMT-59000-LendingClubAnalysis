@@ -413,8 +413,8 @@ PRODUCTION_MODEL_KEY: str = "xgboost"
 # explainer types -- both sample sizes are capped so global explanations
 # stay fast in an interactive Streamlit session while remaining large
 # enough for stable importance estimates.
-SHAP_BACKGROUND_SAMPLE_SIZE: int = 200
-SHAP_GLOBAL_SAMPLE_SIZE: int = 300
+SHAP_BACKGROUND_SAMPLE_SIZE: int = 100
+SHAP_GLOBAL_SAMPLE_SIZE: int = 150
 
 # --- Phase 4A artifact paths (all under EXPLAINABILITY_DIR) ---
 MODEL_METADATA_PATH: Path = EXPLAINABILITY_DIR / "model_metadata.joblib"
@@ -467,7 +467,7 @@ OUTLIER_IQR_MULTIPLIER: float = 3.0
 # that, borrower segments become too numerous for the business
 # applications this phase targets (marketing campaigns, underwriting
 # policy tiers) to act on distinctly.
-N_CLUSTERS_CANDIDATES: List[int] = [2, 3, 4, 5, 6, 7, 8]
+N_CLUSTERS_CANDIDATES: List[int] = [2, 3, 4, 5, 6]
 
 # Default clustering algorithm and cluster count used by
 # `SegmentationEngine` unless overridden -- see the Phase 4B notebook's
@@ -481,7 +481,7 @@ DEFAULT_N_CLUSTERS: int = 4
 # this project's full dataset size; a random sample is representative
 # enough for a 2D visual sanity-check without a multi-minute wait in an
 # interactive notebook or Streamlit session.
-DIMENSIONALITY_REDUCTION_SAMPLE_SIZE: int = 1000
+DIMENSIONALITY_REDUCTION_SAMPLE_SIZE: int = 500
 
 # --- Phase 4B artifact paths (all under SEGMENTATION_DIR) ---
 PCA_MODEL_PATH: Path = SEGMENTATION_DIR / "pca_model.joblib"
