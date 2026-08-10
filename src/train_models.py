@@ -42,6 +42,7 @@ This module is designed to be run either as a script or imported:
 
 from __future__ import annotations
 
+import argparse
 from dataclasses import dataclass
 from typing import Any, Dict
 
@@ -124,8 +125,13 @@ def run_phase1_pipeline(persist: bool = True) -> Phase1Artifacts:
     if persist:
         utils.save_dataframe(cleaned_df, config.CLEANED_DATA_PATH)
 
+    winsorized_df = utils.winsorize_columns(cleaned_df)
+    if persist:
+        utils.save_dataframe(winsorized_df, config.WINSORIZED_DATA_PATH)
+    logger.info("Using winsorized data for splitting and training.")
+
     # 4. Split (leakage-safe: test/val carved out before any fitting)
-    X_train, X_val, X_test, y_train, y_val, y_test = utils.split_data(cleaned_df)
+    X_train, X_val, X_test, y_train, y_val, y_test = utils.split_data(winsorized_df)
     if persist:
         utils.save_splits(X_train, X_val, X_test, y_train, y_val, y_test)
 
@@ -370,7 +376,7 @@ def run_phase3_pipeline(
     return Phase3Artifacts(results=results, comparison_table=comparison_table)
 
 
-def main() -> None:
+def main(argv=None) -> None:
     """
     Script entry point: run the Phase 1 pipeline, then the Phase 3
     modeling pipeline, and print a concise summary of both.

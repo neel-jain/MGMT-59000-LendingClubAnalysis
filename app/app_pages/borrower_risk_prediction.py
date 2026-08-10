@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
-from app.common import (
+from common import (
     apply_global_style, download_report_buttons, get_explainability_engine, get_risk_engine,
     load_cleaned_dataset, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,
@@ -42,6 +42,7 @@ render_page_header(
 model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
 risk_engine = get_risk_engine(model_key)
 explain_engine = get_explainability_engine(model_key)
+show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
 
 if risk_engine is None:
     render_missing_artifact_notice("The scoring model", "python -m src.train_models")
@@ -195,13 +196,19 @@ if "last_borrower_input" in st.session_state:
                 for f in local.top_protective_factors[:3]:
                     st.markdown(f"- 🟢 {f}")
 
-            wcol1, wcol2 = st.columns(2)
-            with wcol1:
-                fig = explain_engine.generate_waterfall_plot(borrower)
-                st.pyplot(fig)
-            with wcol2:
-                fig = explain_engine.generate_force_plot(borrower)
-                st.pyplot(fig)
+            if show_advanced_statistics:
+                wcol1, wcol2 = st.columns(2)
+                with wcol1:
+                    fig = explain_engine.generate_waterfall_plot(borrower)
+                    st.pyplot(fig)
+                with wcol2:
+                    fig = explain_engine.generate_force_plot(borrower)
+                    st.pyplot(fig)
+            else:
+                st.info(
+                    "Enable 'Show advanced statistics' in the left sidebar to view detailed explanation plots.",
+                    icon="ℹ️",
+                )
 
             render_section_header("Exportable Reports")
             col_a, col_b = st.columns(2)

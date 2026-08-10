@@ -23,10 +23,13 @@ from pathlib import Path
 import streamlit as st
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+APP_DIR = Path(__file__).resolve().parent
+if str(APP_DIR) not in sys.path:
+    sys.path.insert(0, str(APP_DIR))
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from app.common import apply_global_style, load_cleaned_dataset, render_global_sidebar_controls  # noqa: E402
+from common import apply_global_style, load_cleaned_dataset, render_global_sidebar_controls  # noqa: E402
 from src import config, utils  # noqa: E402
 
 logger = utils.get_logger("app")
@@ -58,9 +61,8 @@ pages = {
     ],
     "Analysis": [
         st.Page(str(PAGES_DIR / "exploratory_analysis.py"), title="Exploratory Analysis", icon="🔍"),
-        st.Page(str(PAGES_DIR / "model_comparison.py"), title="Model Comparison", icon="🤖"),
         st.Page(str(PAGES_DIR / "business_insights.py"), title="Business Insights", icon="💡"),
-        st.Page(str(PAGES_DIR / "model_explainability.py"), title="Model Explainability", icon="🧠"),
+        st.Page(str(PAGES_DIR / "model_explainability.py"), title="Regression Model", icon="🧠"),
     ],
     "Decision Tools": [
         st.Page(str(PAGES_DIR / "borrower_risk_prediction.py"), title="Borrower Risk Prediction", icon="🎯"),

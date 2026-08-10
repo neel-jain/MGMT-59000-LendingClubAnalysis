@@ -54,21 +54,17 @@ MODEL_LABELS: Dict[str, str] = {k: model_utils.MODEL_DISPLAY_NAMES[k] for k in M
 @st.cache_data(show_spinner="Loading borrower dataset...")
 def load_cleaned_dataset() -> pd.DataFrame:
     """
-    Load the Phase 1 cleaned dataset (one row per resolved Indiana loan)
-    used for the Executive Dashboard, Exploratory Analysis, and Business
-    Insights pages.
+    Load the winsorized borrower dataset used by the Streamlit app.
 
     Returns
     -------
     pd.DataFrame
-        Empty DataFrame if Phase 1 has not yet been run (so pages can
-        show a friendly "run the pipeline first" message instead of
-        crashing).
+        The winsorized dataset, or an empty frame if it has not yet been generated.
     """
     try:
-        return utils.load_dataframe(config.CLEANED_DATA_PATH)
+        return utils.load_dataframe(config.WINSORIZED_DATA_PATH)
     except FileNotFoundError:
-        logger.warning("Cleaned dataset not found at %s.", config.CLEANED_DATA_PATH)
+        logger.warning("Winsorized dataset not found at %s.", config.WINSORIZED_DATA_PATH)
         return pd.DataFrame()
 
 
@@ -430,6 +426,27 @@ def apply_borrower_filters(df: pd.DataFrame, filters: Dict[str, object]) -> pd.D
     return df[mask]
 
 
+def render_advanced_statistics_toggle() -> bool:
+    """
+    Render the sidebar toggle for advanced statistics content.
+
+    Returns
+    -------
+    bool
+        True when advanced statistics should be shown.
+    """
+    return st.sidebar.checkbox(
+        "Show advanced statistics", value=False,
+        help="Reveal deeper analytics and supplemental charts for advanced users.",
+        key="show_advanced_statistics",
+    )
+
+
+def advanced_statistics_enabled() -> bool:
+    """Return whether the user has enabled advanced statistics in the sidebar."""
+    return st.session_state.get("show_advanced_statistics", False)
+
+
 def render_theme_options() -> str:
     """
     Render the sidebar's (lightweight) display-density option. Full
@@ -452,17 +469,22 @@ def render_theme_options() -> str:
 
 
 def render_download_options() -> None:
-    """Render the sidebar's global download options (full cleaned dataset, model comparison table)."""
+    """Render the sidebar's global download options (winsorized dataset, model comparison table)."""
     with st.sidebar.expander("⬇ Download Options", expanded=False):
-        cleaned = load_cleaned_dataset()
-        if not cleaned.empty:
-            download_dataframe_button(cleaned, "Full Borrower Dataset (CSV)", "lendingclub_indiana_cleaned.csv", key="dl_full_dataset")
+        winsorized = load_cleaned_dataset()
+        if not winsorized.empty:
+            download_dataframe_button(
+                winsorized,
+                "Winsorized Borrower Dataset (CSV)",
+                config.WINSORIZED_DATA_FILENAME,
+                key="dl_winsorized_dataset",
+            )
         reports = load_phase3_reports()
         if reports:
             download_dataframe_button(
                 reports["comparison_table"], "Model Comparison Table (CSV)", "model_comparison_table.csv", key="dl_comparison_table",
             )
-        if not cleaned.empty or reports:
+        if not winsorized.empty or reports:
             st.caption("More specific exports (borrower reports, segment summaries) are available on their respective pages.")
         else:
             st.caption("Run the project pipeline to generate downloadable data.")
@@ -484,14 +506,13 @@ def render_about_sidebar() -> None:
 def render_global_sidebar_controls(cleaned_df: pd.DataFrame) -> None:
     """
     Render every sidebar control the Phase 5 brief calls for (Borrower
-    Filters, Model Selection, Theme Options, Download Options, About
-    Project) in one call from `app.py`, so it appears consistently above
-    the page-specific content on every page. Navigation itself is
-    rendered separately by `st.navigation` in `app.py`.
+    Filters, Advanced Statistics toggle, Download Options, About Project)
+    in one call from `app.py`, so it appears consistently above the
+    page-specific content on every page. Navigation itself is rendered
+    separately by `st.navigation` in `app.py`.
     """
     st.sidebar.markdown("---")
-    render_model_selector()
-    render_theme_options()
+    render_advanced_statistics_toggle()
     render_borrower_filters(cleaned_df)
     render_download_options()
     render_about_sidebar()

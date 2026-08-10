@@ -19,7 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import streamlit as st
 
-from app.common import apply_global_style, render_page_header, render_section_header
+from common import apply_global_style, render_page_header, render_section_header
 
 apply_global_style()
 render_page_header("About This Project", "LendingClub Loan Default Risk — Indiana Borrowers")

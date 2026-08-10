@@ -21,7 +21,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import streamlit as st
 
-from app.common import (
+from common import (
     apply_global_style, get_explainability_engine, get_segmentation_engine, load_cleaned_dataset,
     render_missing_artifact_notice, render_page_header,
 )
@@ -41,6 +41,7 @@ if cleaned_df.empty:
 model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
 explain_engine = get_explainability_engine(model_key)
 segmentation_engine = get_segmentation_engine()
+show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
 
 
 def _research_question_block(number: str, question: str, finding: str, recommendation: str, decision_impact: str, viz_fn):
@@ -64,70 +65,72 @@ _research_question_block(
     lambda: st.pyplot(eda_utils.plot_correlation_heatmap(cleaned_df, config.NUMERIC_FEATURES, title="Feature Correlation")[0]),
 )
 
-# RQ2 -----------------------------------------------------------------------
-_research_question_block(
-    "2", "Do LendingClub grades appear predictive of default?",
-    "Default rate rises substantially from Grade A to Grade G in the observed data, confirming grade carries "
-    "real predictive signal even alongside the other features in the model.",
-    "Continue using grade as a core underwriting input; cross-check it against the model's predicted probability "
-    "for cases where they disagree.",
-    "Validates that the existing grading system remains a sound foundation for pricing.",
-    lambda: st.pyplot(eda_utils.plot_default_rate_by_group(cleaned_df, "grade", title="Default Rate by Grade")[0]),
-)
-
-# RQ3 -----------------------------------------------------------------------
-_research_question_block(
-    "3", "Which variables are related to higher interest rates?",
-    "Loan grade and DTI show the strongest relationship with the interest rate LendingClub assigns, consistent "
-    "with a risk-based pricing policy.",
-    "Continue aligning rate-setting with grade and DTI; monitor for drift if new risk factors emerge.",
-    "Confirms current pricing policy is grounded in the same signals the model finds predictive.",
-    lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "int_rate", title="Interest Rate Distribution")),
-)
-
-# RQ4 -----------------------------------------------------------------------
-_research_question_block(
-    "4", "Does income relate to repayment success?",
-    "Higher annual income is associated with lower predicted default risk across all three models, though the "
-    "relationship strengthens further once DTI is also considered (see Model Explainability's dependence plots).",
-    "Continue collecting verified income at application; consider requiring verification for borderline cases.",
-    "Supports maintaining income verification as a standard underwriting step.",
-    lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "annual_inc", title="Annual Income Distribution")),
-)
-
-# RQ5 -----------------------------------------------------------------------
-_research_question_block(
-    "5", "Does DTI influence default?",
-    "Debt-to-income ratio is one of the top-ranked predictors across every model and importance method evaluated.",
-    "Consider a firmer DTI cutoff or a rate markup tier for high-DTI applicants.",
-    "A concrete, actionable lever for updating underwriting policy.",
-    lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "dti", title="Debt-to-Income Distribution")),
-)
-
-# RQ6 -----------------------------------------------------------------------
-_research_question_block(
-    "6", "Does employment length matter?",
-    "Employment length ranks lower in importance than income, DTI, and grade across all three models — it "
-    "matters less than commonly assumed once those other factors are known.",
-    "Lower-priority for manual verification relative to income and DTI; do not over-weight in manual overrides.",
-    "Helps focus underwriter attention on higher-value verification steps.",
-    lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "emp_length_years", title="Employment Length Distribution")),
-)
-
-# RQ7 -----------------------------------------------------------------------
-if segmentation_engine is not None:
-    ml_comparison = segmentation_engine.compare_with_supervised_models()
-    _research_question_block(
-        "7", "Which borrower segments represent the highest lending risk, and can natural groups be observed before clustering?",
-        "Borrower segmentation identifies distinct financial-profile groups whose predicted default probability "
-        "(from the supervised model) and actual default rate agree directionally — see the Borrower Segmentation page.",
-        "Use segment membership to set portfolio-level origination limits and marketing strategy, in addition to "
-        "the per-borrower supervised prediction.",
-        "Gives Lending Club both an individual risk score and a portfolio-level segmentation lens.",
-        lambda: st.dataframe(
-            ml_comparison[["segment_name", "mean_predicted_probability", "average_default_rate", "risk_tier"]],
-            hide_index=True,
-        ),
+if not show_advanced_statistics:
+    st.info(
+        "This page is focused on the executive summary for the highest-priority finding (RQ1). "
+        "Enable 'Show advanced statistics' in the left sidebar to view supplemental charts and deeper research-question detail.",
     )
 else:
-    render_missing_artifact_notice("Borrower segmentation", "python -m src.train_models")
+    advanced_tab, = st.tabs(["Advanced Statistics"])
+    with advanced_tab:
+        _research_question_block(
+            "2", "Do LendingClub grades appear predictive of default?",
+            "Default rate rises substantially from Grade A to Grade G in the observed data, confirming grade carries "
+            "real predictive signal even alongside the other features in the model.",
+            "Continue using grade as a core underwriting input; cross-check it against the model's predicted probability "
+            "for cases where they disagree.",
+            "Validates that the existing grading system remains a sound foundation for pricing.",
+            lambda: st.pyplot(eda_utils.plot_default_rate_by_group(cleaned_df, "grade", title="Default Rate by Grade")[0]),
+        )
+
+        _research_question_block(
+            "3", "Which variables are related to higher interest rates?",
+            "Loan grade and DTI show the strongest relationship with the interest rate LendingClub assigns, consistent "
+            "with a risk-based pricing policy.",
+            "Continue aligning rate-setting with grade and DTI; monitor for drift if new risk factors emerge.",
+            "Confirms current pricing policy is grounded in the same signals the model finds predictive.",
+            lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "int_rate", title="Interest Rate Distribution")),
+        )
+
+        _research_question_block(
+            "4", "Does income relate to repayment success?",
+            "Higher annual income is associated with lower predicted default risk across all three models, though the "
+            "relationship strengthens further once DTI is also considered (see Model Explainability's dependence plots).",
+            "Continue collecting verified income at application; consider requiring verification for borderline cases.",
+            "Supports maintaining income verification as a standard underwriting step.",
+            lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "annual_inc", title="Annual Income Distribution")),
+        )
+
+        _research_question_block(
+            "5", "Does DTI influence default?",
+            "Debt-to-income ratio is one of the top-ranked predictors across every model and importance method evaluated.",
+            "Consider a firmer DTI cutoff or a rate markup tier for high-DTI applicants.",
+            "A concrete, actionable lever for updating underwriting policy.",
+            lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "dti", title="Debt-to-Income Distribution")),
+        )
+
+        _research_question_block(
+            "6", "Does employment length matter?",
+            "Employment length ranks lower in importance than income, DTI, and grade across all three models — it "
+            "matters less than commonly assumed once those other factors are known.",
+            "Lower-priority for manual verification relative to income and DTI; do not over-weight in manual overrides.",
+            "Helps focus underwriter attention on higher-value verification steps.",
+            lambda: st.pyplot(eda_utils.plot_numeric_distribution(cleaned_df, "emp_length_years", title="Employment Length Distribution")),
+        )
+
+        if segmentation_engine is not None:
+            ml_comparison = segmentation_engine.compare_with_supervised_models()
+            _research_question_block(
+                "7", "Which borrower segments represent the highest lending risk, and can natural groups be observed before clustering?",
+                "Borrower segmentation identifies distinct financial-profile groups whose predicted default probability "
+                "(from the supervised model) and actual default rate agree directionally — see the Borrower Segmentation page.",
+                "Use segment membership to set portfolio-level origination limits and marketing strategy, in addition to "
+                "the per-borrower supervised prediction.",
+                "Gives Lending Club both an individual risk score and a portfolio-level segmentation lens.",
+                lambda: st.dataframe(
+                    ml_comparison[["segment_name", "mean_predicted_probability", "average_default_rate", "risk_tier"]],
+                    hide_index=True,
+                ),
+            )
+        else:
+            render_missing_artifact_notice("Borrower segmentation", "python -m src.train_models")

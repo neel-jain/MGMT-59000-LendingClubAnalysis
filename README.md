@@ -261,6 +261,8 @@ python tests/generate_synthetic_fixture.py
 python -m src.train_models
 ```
 
+This now applies IQR-based winsorization to `annual_inc` and `dti` before splitting and training.
+
 **2. Persist the explainability and segmentation artifacts (Phases 4A/4B):**
 
 ```bash
@@ -283,6 +285,8 @@ engine.persist_segmentation_artifacts()
 ```bash
 streamlit run app/app.py
 ```
+
+The dashboard now uses the winsorized borrower dataset by default, with no non-winsorized option.
 
 **4. Run the test suite:**
 

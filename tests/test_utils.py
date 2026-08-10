@@ -43,6 +43,19 @@ def test_parse_emp_length_maps_known_values():
     assert np.isnan(result["emp_length_years"].iloc[3])
 
 
+def test_winsorize_columns_clips_extreme_values():
+    df = pd.DataFrame({
+        "annual_inc": [30000, 40000, 50000, 1000000],
+        "dti": [10.0, 15.0, 20.0, 500.0],
+    })
+    result = utils.winsorize_columns(df, columns=["annual_inc", "dti"], iqr_multiplier=1.5)
+
+    assert result["annual_inc"].max() < 1000000
+    assert result["dti"].max() < 500.0
+    assert result["annual_inc"].iloc[:-1].tolist() == [30000, 40000, 50000]
+    assert result["dti"].iloc[:-1].tolist() == [10.0, 15.0, 20.0]
+
+
 def test_create_target_variable_maps_and_filters():
     df = pd.DataFrame(
         {

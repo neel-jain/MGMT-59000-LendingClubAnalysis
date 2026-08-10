@@ -409,6 +409,58 @@ def clean_percentage_columns(
     return df
 
 
+def winsorize_columns(
+    df: pd.DataFrame,
+    columns: List[str] = config.WINSORIZE_FEATURES,
+    iqr_multiplier: float = config.WINSORIZE_IQR_MULTIPLIER,
+) -> pd.DataFrame:
+    """
+    Winsorize numeric columns by clipping extreme values to the IQR-based
+    bounds [Q1 - multiplier * IQR, Q3 + multiplier * IQR].
+
+    This is useful for regression-ready numeric features like annual income
+    and DTI, where a few extreme values can distort scaling, fit, and
+    distributional diagnostics.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        DataFrame containing the columns to winsorize.
+    columns : list[str]
+        Columns to clip. Defaults to config.WINSORIZE_FEATURES.
+    iqr_multiplier : float
+        Multiplier applied to the interquartile range. Defaults to
+        config.WINSORIZE_IQR_MULTIPLIER.
+
+    Returns
+    -------
+    pd.DataFrame
+        Copy of ``df`` with the specified columns clipped in place.
+    """
+    df = df.copy()
+    for col in columns:
+        if col not in df.columns:
+            logger.warning("Winsorize column '%s' not found — skipping.", col)
+            continue
+        if not pd.api.types.is_numeric_dtype(df[col]):
+            logger.warning("Column '%s' is not numeric — skipping winsorization.", col)
+            continue
+        q1, q3 = df[col].quantile(0.25), df[col].quantile(0.75)
+        iqr = q3 - q1
+        lower, upper = q1 - iqr_multiplier * iqr, q3 + iqr_multiplier * iqr
+        n_clipped = int(((df[col] < lower) | (df[col] > upper)).sum())
+        df[col] = df[col].clip(lower=lower, upper=upper)
+        if n_clipped:
+            logger.info(
+                "Winsorized %d extreme values in '%s' to [%.2f, %.2f].",
+                n_clipped,
+                col,
+                lower,
+                upper,
+            )
+    return df
+
+
 def parse_emp_length(
     df: pd.DataFrame,
     raw_column: str = config.EMP_LENGTH_RAW_COLUMN,

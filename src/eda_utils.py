@@ -350,7 +350,9 @@ def plot_categorical_distribution(
                     palette=PALETTE_SEQUENTIAL, hue=counts.index.astype(str), legend=False)
         ax.set_ylabel("Number of Loans")
         ax.set_xlabel(column)
-        ax.tick_params(axis="x", rotation=30)
+        ax.tick_params(axis="x", rotation=45)
+        for label in ax.get_xticklabels():
+            label.set_ha("right")
         for i, v in enumerate(counts.values):
             ax.text(i, v, f"{v:,}", ha="center", va="bottom", fontsize=9)
 
@@ -628,6 +630,11 @@ def plot_default_rate_by_group(
     (plt.Figure, pd.DataFrame)
     """
     summary = default_rate_by_group(df, group_column, target_column)
+    if group_column == "grade":
+        grade_order = config.ORDINAL_CATEGORY_ORDER[0]
+        existing_order = [grade for grade in grade_order if grade in summary.index]
+        summary = summary.reindex(existing_order)
+
     plot_summary = summary[summary["loan_count"] >= min_group_size]
     overall_rate = df[target_column].mean()
 
@@ -646,7 +653,9 @@ def plot_default_rate_by_group(
         )
     ax.set_ylabel("Default Rate (%)")
     ax.set_xlabel(group_column)
-    ax.tick_params(axis="x", rotation=30)
+    ax.tick_params(axis="x", rotation=45)
+    for label in ax.get_xticklabels():
+        label.set_ha("right")
     ax.legend(frameon=False)
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()

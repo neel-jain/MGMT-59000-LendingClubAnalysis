@@ -37,7 +37,6 @@ APP_ENTRY = str(PROJECT_ROOT / "app" / "app.py")
 PAGE_FILES = [
     "app_pages/executive_dashboard.py",
     "app_pages/exploratory_analysis.py",
-    "app_pages/model_comparison.py",
     "app_pages/borrower_risk_prediction.py",
     "app_pages/borrower_segmentation.py",
     "app_pages/business_insights.py",
@@ -73,16 +72,16 @@ def test_default_page_shows_kpi_metrics(app):
 
 @pytest.mark.parametrize("page_file", PAGE_FILES)
 def test_every_page_loads_without_exception(page_file):
-    """Every page in the Phase 5 brief (8 pages) must load cleanly -- no broken navigation, no import errors."""
+    """Every visible page in the Phase 5 brief must load cleanly -- no broken navigation, no import errors."""
     at = _fresh_app()
     at.switch_page(page_file)
     at.run()
     assert not at.exception, f"Page {page_file} raised: {at.exception}"
 
 
-def test_all_eight_pages_are_present():
-    """Sanity check that no page from the Phase 5 brief is missing."""
-    assert len(PAGE_FILES) == 8
+def test_all_pages_are_present():
+    """Sanity check that no visible page from the brief is missing."""
+    assert len(PAGE_FILES) == 7
     for page_file in PAGE_FILES:
         assert (PROJECT_ROOT / "app" / page_file).exists(), f"Missing page file: {page_file}"
 
@@ -92,19 +91,13 @@ def test_all_eight_pages_are_present():
 # ---------------------------------------------------------------------------
 
 
-def test_sidebar_model_selector_present(app):
-    assert len(app.sidebar.selectbox) >= 1
+def test_sidebar_advanced_toggle_present(app):
+    assert len(app.sidebar.checkbox) >= 1
 
 
-def test_sidebar_theme_toggle_present(app):
-    assert len(app.sidebar.radio) >= 1
-
-
-def test_sidebar_selecting_different_model_reruns_without_error(app):
-    selectbox = app.sidebar.selectbox[0]
-    original = selectbox.value
-    other_options = [o for o in selectbox.options if o != original]
-    selectbox.set_value(other_options[0]).run()
+def test_sidebar_toggling_advanced_reruns_without_error(app):
+    checkbox = app.sidebar.checkbox[0]
+    checkbox.set_value(not checkbox.value).run()
     assert not app.exception
 
 
@@ -140,14 +133,20 @@ def test_prediction_form_shows_placeholder_before_submission():
 # ---------------------------------------------------------------------------
 
 
-def test_business_insights_covers_all_seven_research_questions():
+def test_business_insights_covers_rq1_and_advanced_toggle():
     at = _fresh_app()
     at.switch_page("app_pages/business_insights.py")
     at.run()
     assert not at.exception
     headers_text = " ".join(m.value for m in at.markdown if m.value.startswith("####"))
-    for i in range(1, 8):
-        assert f"RQ{i}:" in headers_text
+    assert "RQ1:" in headers_text
+    assert "RQ2:" not in headers_text
+    assert "RQ3:" not in headers_text
+    assert "RQ4:" not in headers_text
+    assert "RQ5:" not in headers_text
+    assert "RQ6:" not in headers_text
+    assert "RQ7:" not in headers_text
+    assert any("Show advanced statistics" in element.label for element in at.sidebar.checkbox)
 
 
 # ---------------------------------------------------------------------------

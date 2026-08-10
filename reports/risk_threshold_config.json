@@ -1,0 +1,93 @@
+{
+  "risk_tiers": [
+    {
+      "name": "Low Risk",
+      "min_probability": 0.0,
+      "max_probability": 0.15,
+      "description": "Strong repayment profile; default probability is low relative to the portfolio."
+    },
+    {
+      "name": "Moderate Risk",
+      "min_probability": 0.15,
+      "max_probability": 0.35,
+      "description": "Acceptable repayment profile with some risk factors present."
+    },
+    {
+      "name": "High Risk",
+      "min_probability": 0.35,
+      "max_probability": 0.6,
+      "description": "Elevated default probability; multiple risk factors present."
+    },
+    {
+      "name": "Very High Risk",
+      "min_probability": 0.6,
+      "max_probability": 1.01,
+      "description": "Default probability is high; approval is not recommended without mitigation."
+    }
+  ],
+  "lending_actions": [
+    {
+      "tier": "Low Risk",
+      "action": "Approve",
+      "description": "Proceed with standard underwriting terms."
+    },
+    {
+      "tier": "Moderate Risk",
+      "action": "Approve with Conditions",
+      "description": "Approve with a rate adjustment and/or reduced principal to price in the added risk."
+    },
+    {
+      "tier": "High Risk",
+      "action": "Manual Review",
+      "description": "Route to a credit analyst for manual review before a decision is made."
+    },
+    {
+      "tier": "Very High Risk",
+      "action": "Decline",
+      "description": "Decline under standard policy; only proceed via an exception process."
+    }
+  ],
+  "interest_rate_adjustment_bps": {
+    "Low Risk": -50.0,
+    "Moderate Risk": 0.0,
+    "High Risk": 150.0,
+    "Very High Risk": 400.0
+  },
+  "loan_grade_bands": [
+    {
+      "grade": "A",
+      "min_probability": 0.0,
+      "max_probability": 0.08
+    },
+    {
+      "grade": "B",
+      "min_probability": 0.08,
+      "max_probability": 0.15
+    },
+    {
+      "grade": "C",
+      "min_probability": 0.15,
+      "max_probability": 0.25
+    },
+    {
+      "grade": "D",
+      "min_probability": 0.25,
+      "max_probability": 0.4
+    },
+    {
+      "grade": "E",
+      "min_probability": 0.4,
+      "max_probability": 0.55
+    },
+    {
+      "grade": "F",
+      "min_probability": 0.55,
+      "max_probability": 0.7
+    },
+    {
+      "grade": "G",
+      "min_probability": 0.7,
+      "max_probability": 1.01
+    }
+  ]
+}

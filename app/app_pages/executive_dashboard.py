@@ -22,7 +22,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import matplotlib.pyplot as plt
 import streamlit as st
 
-from app.common import (
+from common import (
     apply_borrower_filters, apply_global_style, get_explainability_engine, get_global_explanation,
     load_cleaned_dataset, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,

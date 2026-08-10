@@ -20,7 +20,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import streamlit as st
 
-from app.common import (
+from common import (
     apply_global_style, download_dataframe_button, download_report_buttons, get_cluster_visualization,
     get_segmentation_engine, render_missing_artifact_notice, render_page_header, render_section_header,
 )
@@ -79,32 +79,33 @@ with col2:
 # ---------------------------------------------------------------------------
 # Visualizations
 # ---------------------------------------------------------------------------
-render_section_header("Cluster Visualizations")
-
-viz_tabs = st.tabs(["PCA", "t-SNE", "Radar Chart", "Heatmap"])
-segmentation_cache_key = f"{engine.algorithm}_{engine.n_clusters}"
-try:
-    with viz_tabs[0]:
-        fig = get_cluster_visualization(engine, "pca", segmentation_cache_key)
-        st.pyplot(fig)
-    with viz_tabs[1]:
-        fig = get_cluster_visualization(engine, "tsne", segmentation_cache_key)
-        st.pyplot(fig)
-    with viz_tabs[2]:
-        profile_df = engine._X_train_raw.copy()
-        profile_df["cluster"] = engine.fit_result.labels
-        features = ["annual_inc", "dti", "loan_amnt", "int_rate", "emp_length_years", "revol_util"]
-        fig = cv.plot_radar_chart(profile_df, features, segment_names=segment_names)
-        st.pyplot(fig)
-    with viz_tabs[3]:
-        profile_df = engine._X_train_raw.copy()
-        profile_df["cluster"] = engine.fit_result.labels
-        features = ["annual_inc", "dti", "loan_amnt", "int_rate", "emp_length_years", "revol_util"]
-        fig = cv.plot_cluster_heatmap(profile_df, features, segment_names=segment_names)
-        st.pyplot(fig)
-except Exception as exc:  # noqa: BLE001
-    logger.error("Cluster visualization failed: %s", exc, exc_info=True)
-    st.error("One or more cluster visualizations could not be rendered. The segment data above remains valid.", icon="🚫")
+show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
+if show_advanced_statistics:
+    render_section_header("Cluster Visualizations")
+    viz_tabs = st.tabs(["PCA", "t-SNE", "Radar Chart", "Heatmap"])
+    segmentation_cache_key = f"{engine.algorithm}_{engine.n_clusters}"
+    try:
+        with viz_tabs[0]:
+            fig = get_cluster_visualization(engine, "pca", segmentation_cache_key)
+            st.pyplot(fig)
+        with viz_tabs[1]:
+            fig = get_cluster_visualization(engine, "tsne", segmentation_cache_key)
+            st.pyplot(fig)
+        with viz_tabs[2]:
+            profile_df = engine._X_train_raw.copy()
+            profile_df["cluster"] = engine.fit_result.labels
+            features = ["annual_inc", "dti", "loan_amnt", "int_rate", "emp_length_years", "revol_util"]
+            fig = cv.plot_radar_chart(profile_df, features, segment_names=segment_names)
+            st.pyplot(fig)
+        with viz_tabs[3]:
+            profile_df = engine._X_train_raw.copy()
+            profile_df["cluster"] = engine.fit_result.labels
+            features = ["annual_inc", "dti", "loan_amnt", "int_rate", "emp_length_years", "revol_util"]
+            fig = cv.plot_cluster_heatmap(profile_df, features, segment_names=segment_names)
+            st.pyplot(fig)
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Cluster visualization failed: %s", exc, exc_info=True)
+        st.error("One or more cluster visualizations could not be rendered. The segment data above remains valid.", icon="🚫")
 
 # ---------------------------------------------------------------------------
 # Relationship to supervised models + portfolio recommendations

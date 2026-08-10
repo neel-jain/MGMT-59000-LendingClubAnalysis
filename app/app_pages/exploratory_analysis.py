@@ -20,8 +20,8 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import streamlit as st
 
-from app.common import (
-    apply_borrower_filters, apply_global_style, load_cleaned_dataset,
+from common import (
+    advanced_statistics_enabled, apply_borrower_filters, apply_global_style, load_cleaned_dataset,
     render_missing_artifact_notice, render_page_header, render_section_header,
 )
 from src import config, eda_utils
@@ -55,7 +55,9 @@ tab_labels = ["Grade", "Purpose", "Home Ownership", "Income", "Loan Amount", "In
 tabs = st.tabs(tab_labels)
 
 with tabs[0]:
-    fig = eda_utils.plot_categorical_distribution(df, "grade", title="Loan Grade Distribution")
+    fig = eda_utils.plot_categorical_distribution(
+        df, "grade", title="Loan Grade Distribution", order_by_count=False,
+    )
     st.pyplot(fig)
 with tabs[1]:
     fig = eda_utils.plot_categorical_distribution(df, "purpose", title="Loan Purpose Distribution")
@@ -98,30 +100,34 @@ fig, _ = eda_utils.plot_correlation_heatmap(
 )
 st.pyplot(fig)
 
-# ---------------------------------------------------------------------------
-# Scatter relationships
-# ---------------------------------------------------------------------------
-render_section_header("Bivariate Relationships")
+if advanced_statistics_enabled():
+    # ---------------------------------------------------------------------------
+    # Scatter relationships
+    # ---------------------------------------------------------------------------
+    render_section_header("Bivariate Relationships")
 
-col1, col2 = st.columns(2)
-x_options = ["loan_amnt", "int_rate", "annual_inc", "dti"]
-with col1:
-    x_var = st.selectbox("X axis", x_options, index=0, key="scatter_x")
-with col2:
-    y_var = st.selectbox("Y axis", x_options, index=1, key="scatter_y")
+    col1, col2 = st.columns(2)
+    x_options = ["loan_amnt", "int_rate", "annual_inc", "dti"]
+    with col1:
+        x_var = st.selectbox("X axis", x_options, index=0, key="scatter_x")
+    with col2:
+        y_var = st.selectbox("Y axis", x_options, index=1, key="scatter_y")
 
-if x_var != y_var:
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(8, 5))
-    scatter = ax.scatter(df[x_var], df[y_var], c=df["default_flag"], cmap="RdBu_r", alpha=0.5, s=18)
-    ax.set_xlabel(x_var.replace("_", " ").title())
-    ax.set_ylabel(y_var.replace("_", " ").title())
-    ax.set_title(f"{x_var.replace('_', ' ').title()} vs. {y_var.replace('_', ' ').title()} (colored by default)", fontsize=12, fontweight="bold", loc="left")
-    fig.colorbar(scatter, ax=ax, label="Default (1) / Fully Paid (0)")
-    fig.tight_layout()
-    st.pyplot(fig)
-else:
-    st.info("Choose two different variables to compare.", icon="ℹ️")
+    if x_var != y_var:
+        import matplotlib.pyplot as plt
+        fig, ax = plt.subplots(figsize=(8, 5))
+        scatter = ax.scatter(df[x_var], df[y_var], c=df["default_flag"], cmap="RdBu_r", alpha=0.5, s=18)
+        ax.set_xlabel(x_var.replace("_", " ").title())
+        ax.set_ylabel(y_var.replace("_", " ").title())
+        ax.set_title(
+            f"{x_var.replace('_', ' ').title()} vs. {y_var.replace('_', ' ').title()} (colored by default)",
+            fontsize=12, fontweight="bold", loc="left",
+        )
+        fig.colorbar(scatter, ax=ax, label="Default (1) / Fully Paid (0)")
+        fig.tight_layout()
+        st.pyplot(fig)
+    else:
+        st.info("Choose two different variables to compare.", icon="ℹ️")
 
 with st.expander("View filtered data table"):
     st.dataframe(df)

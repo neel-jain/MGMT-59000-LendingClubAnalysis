@@ -462,6 +462,12 @@ CLUSTERING_PROFILE_CATEGORICAL_FEATURES: List[str] = list(ONEHOT_CATEGORICAL_FEA
 # from distorting cluster boundaries for everyone else.
 OUTLIER_IQR_MULTIPLIER: float = 3.0
 
+# Numeric features to winsorize for regression-ready data.
+WINSORIZE_FEATURES: List[str] = ["annual_inc", "dti"]
+WINSORIZE_IQR_MULTIPLIER: float = 3.0
+WINSORIZED_DATA_FILENAME: str = "lendingclub_indiana_winsorized.csv"
+WINSORIZED_DATA_PATH: Path = PROCESSED_DATA_DIR / WINSORIZED_DATA_FILENAME
+
 # Candidate cluster counts evaluated by the optimal-k analysis (elbow,
 # silhouette, Calinski-Harabasz, Davies-Bouldin). Capped at 8: beyond
 # that, borrower segments become too numerous for the business
