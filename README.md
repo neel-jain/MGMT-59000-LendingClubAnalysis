@@ -2,6 +2,8 @@
 
 **A full-stack analytics platform for lending risk: predictive modeling, explainable AI, borrower segmentation, and an executive Streamlit dashboard.**
 
+[**▶ Launch the live Streamlit dashboard**](https://mgmt-59000-lendingclubanalysis.streamlit.app/)
+
 Graduate Business Analytics capstone — MGMT 59000, Purdue University
 System, Summer 2026. Predicts loan default risk for Indiana LendingClub
 borrowers and turns that prediction into an explainable, actionable
