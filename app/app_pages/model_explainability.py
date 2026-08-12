@@ -28,7 +28,7 @@ from common import (
     render_page_header, render_section_header,
 )
 from common import MODEL_KEYS
-from src import config, model_utils
+from src import config, labels, model_utils
 
 apply_global_style()
 render_page_header(
@@ -66,7 +66,9 @@ if show_advanced_statistics:
     if comparison_table.empty:
         render_missing_artifact_notice("Model evaluation reports for selected models", "python -m src.train_models")
         st.stop()
-    st.dataframe(comparison_table, hide_index=True)
+    # Display copy gets friendly column headers; the underlying `comparison_table`
+    # stays raw for the recommendation message and the CSV download below.
+    st.dataframe(comparison_table.rename(columns=labels.column_label), hide_index=True)
     download_dataframe_button(comparison_table, "⬇ Download Comparison Table (CSV)", "model_comparison_table.csv")
 
     best_model_row = comparison_table.iloc[0]
@@ -138,10 +140,10 @@ render_section_header("Global Feature Importance")
 
 global_explanation = get_global_explanation(engine, model_key, len(X_test))
 
-st.dataframe(
-    global_explanation.importance_table[["feature_label", "mean_abs_shap", "permutation_importance", "research_question"]],
-    hide_index=True,
-)
+importance_display = global_explanation.importance_table[
+    ["feature_label", "mean_abs_shap", "permutation_importance"]
+].rename(columns=labels.column_label)
+st.dataframe(importance_display, hide_index=True)
 render_executive_summary_box(global_explanation.business_summary)
 
 # ---------------------------------------------------------------------------
@@ -159,7 +161,11 @@ if show_advanced_statistics:
         st.pyplot(fig)
     with tabs[2]:
         feature_options = [f for f in config.NUMERIC_FEATURES + config.ORDINAL_CATEGORICAL_FEATURES]
-        dep_feature = st.selectbox("Feature:", feature_options, index=feature_options.index("dti") if "dti" in feature_options else 0)
+        dep_feature = st.selectbox(
+            "Feature:", feature_options,
+            format_func=labels.column_label,
+            index=feature_options.index("dti") if "dti" in feature_options else 0,
+        )
         fig = engine.generate_dependence_plot(dep_feature, X_test)
         st.pyplot(fig)
     with tabs[3]:

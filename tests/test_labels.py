@@ -26,6 +26,16 @@ def test_column_label_known_columns():
     assert labels.column_label("loan_amnt") == "Loan Amount"
 
 
+def test_column_label_table_columns():
+    assert labels.column_label("roc_auc") == "ROC-AUC"
+    assert labels.column_label("f1_score") == "F1 Score"
+    assert labels.column_label("mean_abs_shap") == "Mean |SHAP|"
+    assert labels.column_label("segment_name") == "Segment"
+    assert labels.column_label("n_borrowers") == "Borrowers"
+    assert labels.column_label("typical_income") == "Typical Income"
+    assert labels.column_label("average_default_rate") == "Default Rate"
+
+
 def test_column_label_unknown_falls_back_gracefully():
     result = labels.column_label("some_unknown_column")
     assert result == "Some Unknown Column"

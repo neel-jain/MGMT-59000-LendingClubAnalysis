@@ -25,7 +25,7 @@ from common import (
     get_segmentation_engine, render_missing_artifact_notice, render_page_header, render_section_header,
 )
 from src import cluster_visualization as cv
-from src import utils
+from src import labels, utils
 
 logger = utils.get_logger(__name__)
 
@@ -46,7 +46,7 @@ if engine is None:
 render_section_header("Segment Overview")
 
 comparison = engine.compare_segments()
-st.dataframe(comparison, hide_index=True)
+st.dataframe(comparison.rename(columns=labels.column_label), hide_index=True)
 download_dataframe_button(comparison, "⬇ Download Segment Comparison (CSV)", "segment_comparison.csv")
 
 # ---------------------------------------------------------------------------
@@ -64,7 +64,15 @@ st.write(engine.describe_segment(selected_cluster_id))
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("**Cluster Characteristics**")
-    st.dataframe(engine.generate_cluster_profile().loc[[selected_cluster_id]])
+    profile_display = engine.generate_cluster_profile().loc[[selected_cluster_id]].copy()
+    # Humanize categorical mode values (e.g. purpose "debt_consolidation" -> "Debt Consolidation")
+    # while leaving numeric means untouched. `v == v` is False for NaN, so it is preserved.
+    for cat_col in ("grade", "home_ownership", "purpose"):
+        if cat_col in profile_display.columns:
+            profile_display[cat_col] = profile_display[cat_col].apply(
+                lambda v: labels.category_label(cat_col, v) if v == v else v
+            )
+    st.dataframe(profile_display.rename(columns=labels.column_label))
 with col2:
     st.markdown("**Business Recommendations**")
     rec = engine.recommend_business_actions(selected_cluster_id)
@@ -117,7 +125,8 @@ try:
     selected_model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
     ml_comparison = engine.compare_with_supervised_models(model_key=selected_model_key)
     st.dataframe(
-        ml_comparison[["segment_name", "n_borrowers", "mean_predicted_probability", "average_default_rate", "risk_tier"]],
+        ml_comparison[["segment_name", "n_borrowers", "mean_predicted_probability", "average_default_rate", "risk_tier"]]
+        .rename(columns=labels.column_label),
         hide_index=True,
     )
     st.caption(

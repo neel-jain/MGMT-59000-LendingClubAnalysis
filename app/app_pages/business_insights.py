@@ -168,7 +168,8 @@ else:
                 "the per-borrower supervised prediction.",
                 "Gives Lending Club both an individual risk score and a portfolio-level segmentation lens.",
                 lambda: st.dataframe(
-                    ml_comparison[["segment_name", "mean_predicted_probability", "average_default_rate", "risk_tier"]],
+                    ml_comparison[["segment_name", "mean_predicted_probability", "average_default_rate", "risk_tier"]]
+                    .rename(columns=labels.column_label),
                     hide_index=True,
                 ),
             )
