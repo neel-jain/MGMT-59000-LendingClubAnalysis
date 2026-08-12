@@ -146,9 +146,23 @@ def get_cluster_visualization(_engine: SegmentationEngine, method: str, model_ke
 
 @st.cache_data(show_spinner="Computing learning curve (this refits the model across several training sizes)...")
 def get_learning_curve_figure(_pipeline, X_train: pd.DataFrame, y_train: pd.Series, model_key: str):
-    """Cached wrapper around `model_utils.plot_learning_curve_chart`, keyed on `model_key`."""
+    """
+    Cached wrapper around `model_utils.plot_learning_curve_chart`, keyed on `model_key`.
+
+    The curve is computed on a capped subsample with fewer folds/training
+    sizes (`config.LEARNING_CURVE_APP_*`) so it completes within cloud
+    (Streamlit Community Cloud) memory/time limits -- the full 35-fit
+    refit over the whole training set can exhaust the free-tier container
+    and return an HTTP 503 on the app.
+    """
+    if len(X_train) > config.LEARNING_CURVE_APP_MAX_ROWS:
+        sample_idx = X_train.sample(n=config.LEARNING_CURVE_APP_MAX_ROWS,
+                                    random_state=config.RANDOM_STATE).index
+        X_train, y_train = X_train.loc[sample_idx], y_train.loc[sample_idx]
     return model_utils.plot_learning_curve_chart(
         _pipeline, X_train, y_train, title=MODEL_LABELS[model_key],
+        cv_folds=config.LEARNING_CURVE_APP_FOLDS,
+        train_sizes=config.LEARNING_CURVE_APP_TRAIN_SIZES,
     )
 
 

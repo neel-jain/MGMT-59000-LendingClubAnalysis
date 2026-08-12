@@ -407,6 +407,16 @@ CALIBRATION_METHOD: str = "sigmoid"
 # Learning-curve training-set-size fractions.
 LEARNING_CURVE_TRAIN_SIZES: List[float] = [0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1.0]
 
+# Cloud-safe settings for the dashboard's learning-curve tab. The full
+# multi-fold refit of the production model over the whole training set
+# (35 Random Forest fits) can exhaust memory/run time on Streamlit
+# Community Cloud's free tier and surface as an HTTP 503 on the app, so
+# `get_learning_curve_figure` computes the curve on a capped subsample
+# with fewer folds and training-size fractions.
+LEARNING_CURVE_APP_MAX_ROWS: int = 2500
+LEARNING_CURVE_APP_FOLDS: int = 3
+LEARNING_CURVE_APP_TRAIN_SIZES: List[float] = [0.2, 0.4, 0.6, 0.8, 1.0]
+
 # ---------------------------------------------------------------------------
 # 9. PHASE 4A -- EXPLAINABILITY & RISK SCORING CONFIGURATION
 # ---------------------------------------------------------------------------
