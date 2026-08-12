@@ -9328,3 +9328,46 @@ TypeError: CalibratedClassifierCV.__init__() got an unexpected keyword argument 
 2026-08-12 16:14:13 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
 2026-08-12 16:14:13 | INFO     | app | Streamlit session started. Production model=random_forest, project root=C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone
 2026-08-12 16:14:15 | INFO     | app | Streamlit session started. Production model=random_forest, project root=C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone
+2026-08-12 16:22:11 | INFO     | app | Streamlit session started. Production model=random_forest, project root=C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone
+2026-08-12 16:22:11 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\processed\lendingclub_indiana_winsorized.csv — shape=(21716, 140)
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\evaluation_metrics.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\cv_results.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\probability_predictions.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:22:12 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:22:12 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:22:13 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 16:22:13 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:22:13 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 16:22:13 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:22:13 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
+2026-08-12 16:22:14 | INFO     | src.explainability | Loading Random Forest pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:22:14 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 16:22:14 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 16:22:14 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:22:14 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=Random Forest, decision_threshold=0.15
+2026-08-12 16:22:14 | INFO     | src.explainability | ExplainabilityEngine ready: model=Random Forest, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 16:22:31 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
+2026-08-12 16:23:20 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
+2026-08-12 16:23:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.

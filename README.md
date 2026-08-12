@@ -238,6 +238,14 @@ An eight-page Streamlit application (`app/app.py` + `app/app_pages/`):
 Every page is orchestration-only; every caching, error-handling, and
 styling concern is centralized in `app/common.py`.
 
+> **Note:** the Regression Model page's "Learning Curves" tab is
+> intentionally hidden. Computing a learning curve refits the production
+> model across several training-set sizes, which can crash or exhaust
+> resources in some deployments (e.g. Streamlit Community Cloud's free
+> tier). The functionality is retained in `app/common.py`
+> (`get_learning_curve_figure`) and `src/model_utils.py`
+> (`plot_learning_curve_chart`) for future restoration.
+
 ## Installation Instructions
 
 ```bash

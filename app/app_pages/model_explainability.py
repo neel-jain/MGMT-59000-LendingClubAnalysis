@@ -23,7 +23,7 @@ import streamlit as st
 
 from common import (
     apply_global_style, download_dataframe_button, download_report_buttons, get_explainability_engine,
-    get_global_explanation, get_learning_curve_figure, get_risk_engine, load_phase3_reports,
+    get_global_explanation, load_phase3_reports,
     load_splits_cached, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,
 )
@@ -91,8 +91,8 @@ if show_advanced_statistics:
 
     proba_by_model = reports["probability_predictions"]
 
-    tab_roc, tab_pr, tab_cm, tab_cal, tab_learning = st.tabs(
-        ["ROC Curves", "Precision-Recall Curves", "Confusion Matrices", "Calibration Curves", "Learning Curves"]
+    tab_roc, tab_pr, tab_cm, tab_cal = st.tabs(
+        ["ROC Curves", "Precision-Recall Curves", "Confusion Matrices", "Calibration Curves"]
     )
 
     with tab_roc:
@@ -124,14 +124,11 @@ if show_advanced_statistics:
                 fig = model_utils.plot_calibration_curve_chart(y_test, proba_by_model[key], title=model_utils.MODEL_DISPLAY_NAMES[key])
                 st.pyplot(fig)
 
-    with tab_learning:
-        st.caption("Learning curves are cached per model (they require refitting across several training-set sizes).")
-        learning_key = st.selectbox("Model:", selected, format_func=lambda k: model_utils.MODEL_DISPLAY_NAMES[k], key="learning_curve_model")
-        learning_engine = get_risk_engine(learning_key)
-        if learning_engine is not None:
-            X_train, _, _, y_train, _, _ = load_splits_cached()
-            fig = get_learning_curve_figure(learning_engine.pipeline, X_train, y_train, learning_key)
-            st.pyplot(fig)
+    # The Learning Curves tab is intentionally hidden: computing the curve
+    # refits the production model across several training-set sizes, which
+    # can crash or exhaust resources in some deployments. The functionality
+    # is retained in `get_learning_curve_figure` (app/common.py) and
+    # `model_utils.plot_learning_curve_chart` if it's ever needed again.
 
 # ---------------------------------------------------------------------------
 # Global SHAP feature importance
