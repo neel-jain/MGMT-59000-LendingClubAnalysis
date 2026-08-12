@@ -71,6 +71,9 @@ from sklearn.model_selection import (
 )
 from sklearn.pipeline import Pipeline
 from xgboost import XGBClassifier
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.utils.validation import check_is_fitted
+from sklearn.exceptions import NotFittedError
 
 from src import config, utils
 from src.eda_utils import (
@@ -1065,6 +1068,8 @@ class ModelResult:
     threshold_table: pd.DataFrame
     recommended_threshold: float
     feature_importance: Dict[str, pd.DataFrame] = field(default_factory=dict)
+    calibrated_estimator: Optional[Pipeline] = None
+    calibrated: bool = False
 
     @property
     def display_name(self) -> str:
@@ -1232,6 +1237,51 @@ def train_and_evaluate_model(
         training_time, search_time,
     )
 
+    # Optional calibration: fit a CalibratedClassifierCV on the VALIDATION
+    # split so that final serialized models produce calibrated
+    # probabilities. Use cv='prefit' to wrap the already-refit best
+    # estimator and fit only the calibration layer on X_val / y_val.
+    calibrated_estimator = None
+    calibrated_flag = False
+    if config.CALIBRATE_MODELS:
+        try:
+            logger.info("Fitting calibration wrapper (method=%s) on validation set.", config.CALIBRATION_METHOD)
+
+            # Ensure the returned best_estimator is fitted. `cv='prefit'` in
+            # CalibratedClassifierCV requires a fitted estimator. If for some
+            # reason the search did not refit on the full training set,
+            # explicitly fit it here before wrapping.
+            try:
+                check_is_fitted(best_estimator)
+            except NotFittedError:
+                logger.warning("Best estimator not fitted after search; fitting on full training set before calibration.")
+                best_estimator.fit(X_train, y_train)
+
+            calibrator = CalibratedClassifierCV(estimator=best_estimator, method=config.CALIBRATION_METHOD, cv="prefit")
+            calibrator.fit(X_val, y_val)
+            calibrated_estimator = calibrator
+            calibrated_flag = True
+
+            # Recompute test/val/train probabilities/metrics using calibrated estimator
+            def _predict_and_score_calib(X, y) -> Dict[str, float]:
+                proba = calibrated_estimator.predict_proba(X)[:, 1]
+                pred = (proba >= 0.5).astype(int)
+                return compute_classification_metrics(y, pred, proba)
+
+            train_metrics = _predict_and_score_calib(X_train, y_train)
+            val_metrics = _predict_and_score_calib(X_val, y_val)
+            y_proba_test = calibrated_estimator.predict_proba(X_test)[:, 1]
+            y_pred_test = (y_proba_test >= 0.5).astype(int)
+            test_metrics = compute_classification_metrics(y_test, y_pred_test, y_proba_test)
+            # Recompute threshold table on calibrated validation probabilities
+            y_proba_val = calibrated_estimator.predict_proba(X_val)[:, 1]
+            threshold_table = threshold_metrics_table(y_val, y_proba_val)
+            recommended = float(recommend_threshold(threshold_table)["threshold"])
+        except Exception as exc:  # pragma: no cover - calibration best-effort
+            logger.exception("Calibration failed: %s. Proceeding with uncalibrated estimator.", exc)
+            calibrated_estimator = None
+            calibrated_flag = False
+
     return ModelResult(
         model_key=model_key,
         best_estimator=best_estimator,
@@ -1247,4 +1297,6 @@ def train_and_evaluate_model(
         threshold_table=threshold_table,
         recommended_threshold=recommended,
         feature_importance=feature_importance,
+        calibrated_estimator=calibrated_estimator,
+        calibrated=calibrated_flag,
     )

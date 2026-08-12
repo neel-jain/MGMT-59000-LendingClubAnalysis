@@ -29,7 +29,7 @@ from common import (
     load_cleaned_dataset, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,
 )
-from src import config, utils
+from src import config, labels, utils
 
 logger = utils.get_logger(__name__)
 
@@ -71,19 +71,28 @@ with st.form("borrower_prediction_form"):
     with col1:
         annual_inc = st.number_input("Annual Income ($)", min_value=0.0, value=float(_default("annual_inc", 55000.0)), step=1000.0)
         emp_length_years = st.slider("Employment Length (years)", 0.0, 10.0, float(_default("emp_length_years", 5.0)), step=0.5)
-        home_ownership = st.selectbox("Home Ownership", ["RENT", "MORTGAGE", "OWN", "OTHER"], index=0)
+        home_ownership = st.selectbox(
+            "Home Ownership",
+            ["RENT", "MORTGAGE", "OWN", "ANY"],
+            format_func=lambda v: labels.category_label("home_ownership", v),
+            index=0,
+        )
     with col2:
         loan_amnt = st.number_input("Loan Amount ($)", min_value=500.0, value=float(_default("loan_amnt", 15000.0)), step=500.0)
         purpose = st.selectbox(
             "Loan Purpose",
             ["debt_consolidation", "credit_card", "home_improvement", "major_purchase", "small_business", "other"],
+            format_func=lambda v: labels.category_label("purpose", v),
             index=0,
         )
         int_rate = st.slider("Interest Rate (%)", 5.0, 31.0, float(_default("int_rate", 13.0)), step=0.1)
     with col3:
         grade = st.selectbox("LendingClub Grade", config.ORDINAL_CATEGORY_ORDER[0], index=2)
         dti = st.slider("Debt-to-Income Ratio (%)", 0.0, 50.0, float(_default("dti", 18.0)), step=0.5)
-        term = st.selectbox("Loan Term", [" 36 months", " 60 months"], index=0)
+        term = st.selectbox(
+            "Loan Term", [" 36 months", " 60 months"],
+            format_func=lambda v: labels.category_label("term", v), index=0,
+        )
 
     with st.expander("Advanced: additional credit-profile fields"):
         adv1, adv2, adv3 = st.columns(3)
@@ -100,7 +109,10 @@ with st.form("borrower_prediction_form"):
             pub_rec = st.number_input("Public Derogatory Records", min_value=0, value=int(_default("pub_rec", 0)), step=1)
             pub_rec_bankruptcies = st.number_input("Bankruptcies on Record", min_value=0, value=int(_default("pub_rec_bankruptcies", 0)), step=1)
         verification_status = st.selectbox("Income Verification Status", ["Verified", "Source Verified", "Not Verified"], index=0)
-        initial_list_status = st.selectbox("Initial Listing Status", ["w", "f"], index=0)
+        initial_list_status = st.selectbox(
+            "Initial Listing Status", ["w", "f"],
+            format_func=lambda v: labels.category_label("initial_list_status", v), index=0,
+        )
         application_type = st.selectbox("Application Type", ["Individual", "Joint App"], index=0)
 
     submitted = st.form_submit_button("🎯 Predict Risk")

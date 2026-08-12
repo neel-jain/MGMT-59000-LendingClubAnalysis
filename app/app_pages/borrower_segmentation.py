@@ -113,7 +113,9 @@ if show_advanced_statistics:
 render_section_header("Relationship to the Supervised Models")
 
 try:
-    ml_comparison = engine.compare_with_supervised_models()
+    from src import config
+    selected_model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+    ml_comparison = engine.compare_with_supervised_models(model_key=selected_model_key)
     st.dataframe(
         ml_comparison[["segment_name", "n_borrowers", "mean_predicted_probability", "average_default_rate", "risk_tier"]],
         hide_index=True,

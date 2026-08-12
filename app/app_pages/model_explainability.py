@@ -27,6 +27,7 @@ from common import (
     load_splits_cached, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,
 )
+from common import MODEL_KEYS
 from src import config, model_utils
 
 apply_global_style()
@@ -58,6 +59,13 @@ if show_advanced_statistics:
         st.stop()
 
     comparison_table = reports["comparison_table"]
+    # Filter comparison table to allowed models in the dashboard (excludes xgboost if commented out)
+    from src import model_utils
+    allowed_display_names = [model_utils.MODEL_DISPLAY_NAMES[k] for k in MODEL_KEYS]
+    comparison_table = comparison_table[comparison_table['model'].isin(allowed_display_names)].reset_index(drop=True)
+    if comparison_table.empty:
+        render_missing_artifact_notice("Model evaluation reports for selected models", "python -m src.train_models")
+        st.stop()
     st.dataframe(comparison_table, hide_index=True)
     download_dataframe_button(comparison_table, "⬇ Download Comparison Table (CSV)", "model_comparison_table.csv")
 

@@ -49,6 +49,7 @@ import pandas as pd
 import shap
 from sklearn.inspection import PartialDependenceDisplay
 from sklearn.pipeline import Pipeline
+from sklearn.calibration import CalibratedClassifierCV
 
 from src import config, interpretation_utils, model_utils, utils
 from src.risk_scoring import RiskScoringEngine, MODEL_PATHS
@@ -144,6 +145,18 @@ class ExplainabilityEngine:
         else:
             logger.info("Loading %s pipeline from %s", self.model_display_name, MODEL_PATHS[model_key])
             self.pipeline = utils.load_object(MODEL_PATHS[model_key])
+        # If a CalibratedClassifierCV artifact was persisted as the top-level
+        # object, unwrap its underlying estimator (the original Pipeline)
+        # so we can access `named_steps`. Keep the calibrator for downstream
+        # scoring (passed into RiskScoringEngine) so explanations use the
+        # calibrated probabilities when appropriate.
+        self.calibrator: Optional[CalibratedClassifierCV] = None
+        if isinstance(self.pipeline, CalibratedClassifierCV):
+            self.calibrator = self.pipeline
+            wrapped = getattr(self.pipeline, "estimator", None) or getattr(self.pipeline, "base_estimator", None)
+            if wrapped is None:
+                raise ValueError("Loaded CalibratedClassifierCV has no underlying estimator to unwrap")
+            self.pipeline = wrapped
 
         self.preprocessor = self.pipeline.named_steps["preprocessor"]
         self.classifier = self.pipeline.named_steps["classifier"]
@@ -154,8 +167,9 @@ class ExplainabilityEngine:
 
         self.explainer = self._build_explainer()
 
+        scoring_pipeline = self.calibrator if self.calibrator is not None else self.pipeline
         self.risk_scoring_engine = risk_scoring_engine or RiskScoringEngine(
-            model_key=model_key, pipeline=self.pipeline,
+            model_key=model_key, pipeline=scoring_pipeline,
         )
 
         logger.info(

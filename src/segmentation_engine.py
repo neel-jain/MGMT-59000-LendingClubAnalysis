@@ -419,7 +419,7 @@ class SegmentationEngine:
     # Relationship to supervised models
     # ------------------------------------------------------------------
 
-    def compare_with_supervised_models(self, X: Optional[pd.DataFrame] = None) -> pd.DataFrame:
+    def compare_with_supervised_models(self, X: Optional[pd.DataFrame] = None, model_key: Optional[str] = None) -> pd.DataFrame:
         """
         Cross-reference each segment against the PRODUCTION supervised
         model's predicted default probability -- directly addresses the
@@ -443,7 +443,14 @@ class SegmentationEngine:
         self._require_fit()
         X_source = X if X is not None else self._X_train_raw
         labels = self.clustering_result.labels if X is None else self.predict_cluster(X)
-        proba = self.risk_scoring_engine.predict_probability(X_source)
+        # Use provided model_key if supplied, otherwise the engine's shared risk_scoring_engine
+        if model_key is None:
+            proba = self.risk_scoring_engine.predict_probability(X_source)
+        else:
+            # construct a transient RiskScoringEngine for this comparison only
+            from src.risk_scoring import RiskScoringEngine
+            temp_rs = RiskScoringEngine(model_key=model_key)
+            proba = temp_rs.predict_probability(X_source)
 
         working = pd.DataFrame({"cluster": labels, "predicted_probability": proba})
         grouped = working.groupby("cluster")["predicted_probability"].mean().rename("mean_predicted_probability")

@@ -346,7 +346,16 @@ def run_phase3_pipeline(
         )
         results[model_key] = result
         if persist:
-            utils.save_object(result.best_estimator, model_paths[model_key])
+            # If calibration was performed, persist the calibrated
+            # estimator to the standard model path so downstream loaders
+            # receive calibrated probabilities. Keep an explicit backup
+            # of the raw, uncalibrated estimator for auditing.
+            if getattr(result, "calibrated", False) and getattr(result, "calibrated_estimator", None) is not None:
+                uncal_path = model_paths[model_key].with_name(model_paths[model_key].stem + "_uncalibrated" + model_paths[model_key].suffix)
+                utils.save_object(result.best_estimator, uncal_path)
+                utils.save_object(result.calibrated_estimator, model_paths[model_key])
+            else:
+                utils.save_object(result.best_estimator, model_paths[model_key])
 
     comparison_table = model_utils.build_model_comparison_table(list(results.values()))
 

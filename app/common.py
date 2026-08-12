@@ -34,7 +34,7 @@ if str(PROJECT_ROOT) not in sys.path:
 import pandas as pd
 import streamlit as st
 
-from src import config, interpretation_utils, model_utils, utils
+from src import config, interpretation_utils, labels, model_utils, utils
 from src.configurable_thresholds import RiskThresholdConfig, load_threshold_config
 from src.explainability import ExplainabilityEngine
 from src.risk_scoring import RiskScoringEngine
@@ -42,7 +42,11 @@ from src.segmentation_engine import SegmentationEngine
 
 logger = utils.get_logger(__name__)
 
-MODEL_KEYS = ["logistic_regression", "random_forest", "xgboost"]
+MODEL_KEYS = [
+    "logistic_regression",
+    "random_forest",
+    "xgboost",
+]
 MODEL_LABELS: Dict[str, str] = {k: model_utils.MODEL_DISPLAY_NAMES[k] for k in MODEL_KEYS}
 
 
@@ -366,8 +370,16 @@ def render_borrower_filters(df: pd.DataFrame) -> Dict[str, object]:
         ownerships = sorted(df["home_ownership"].dropna().unique().tolist())
 
         selected_grades = st.multiselect("Loan Grade", grades, default=grades, key="filter_grades")
-        selected_purposes = st.multiselect("Loan Purpose", purposes, default=purposes, key="filter_purposes")
-        selected_ownership = st.multiselect("Home Ownership", ownerships, default=ownerships, key="filter_ownership")
+        # format_func only changes the displayed text; the multiselect still
+        # returns the raw category values that apply_borrower_filters needs.
+        selected_purposes = st.multiselect(
+            "Loan Purpose", purposes, default=purposes,
+            format_func=lambda v: labels.category_label("purpose", v), key="filter_purposes",
+        )
+        selected_ownership = st.multiselect(
+            "Home Ownership", ownerships, default=ownerships,
+            format_func=lambda v: labels.category_label("home_ownership", v), key="filter_ownership",
+        )
 
         income_min, income_max = float(df["annual_inc"].min()), float(df["annual_inc"].max())
         income_range = st.slider("Annual Income ($)", income_min, income_max, (income_min, income_max), key="filter_income")

@@ -390,6 +390,20 @@ COST_FALSE_POSITIVE: float = 1.0
 # draw calibration curves.
 CALIBRATION_BINS: int = 10
 
+# Whether to fit a calibration wrapper (Platt/isotonic) after model
+# training. When True, the training pipeline will fit a calibration
+# model on the VALIDATION split and the calibrated estimator will be
+# serialized to the standard model path so downstream consumers (the
+# Streamlit app, explainability artifacts) receive calibrated
+# probabilities. Set False to preserve raw classifier outputs.
+CALIBRATE_MODELS: bool = True
+
+# Calibration method: 'sigmoid' (Platt scaling) or 'isotonic'.
+# 'sigmoid' is typically more robust with smaller validation sets;
+# 'isotonic' is non-parametric and can better fit large validation
+# sets but risks overfitting with limited data. Default 'sigmoid'.
+CALIBRATION_METHOD: str = "sigmoid"
+
 # Learning-curve training-set-size fractions.
 LEARNING_CURVE_TRAIN_SIZES: List[float] = [0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1.0]
 
@@ -406,7 +420,10 @@ LEARNING_CURVE_TRAIN_SIZES: List[float] = [0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1.0]
 # scorer (see notebooks/MGMT590_LendingClub_Modeling_Phase3.ipynb,
 # Section 7). Centralized here so every Phase 4A module and the eventual
 # Streamlit app default to the same model without re-deciding it.
-PRODUCTION_MODEL_KEY: str = "xgboost"
+PRODUCTION_MODEL_KEY: str = "random_forest"
+# Historically this was XGBoost in Phase 3. Commented out to make it
+# easy to restore later if desired.
+# PRODUCTION_MODEL_KEY: str = "xgboost"
 
 # SHAP computation is O(background_size x n_samples_explained) for
 # TreeExplainer and can be considerably more expensive for other

@@ -20,12 +20,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import streamlit as st
+import pandas as pd
 
 from common import (
     apply_global_style, get_explainability_engine, get_segmentation_engine, load_cleaned_dataset,
     render_missing_artifact_notice, render_page_header,
 )
-from src import config, eda_utils
+from src import config, eda_utils, labels
 
 apply_global_style()
 render_page_header(
@@ -47,11 +48,48 @@ show_advanced_statistics = st.session_state.get("show_advanced_statistics", Fals
 def _research_question_block(number: str, question: str, finding: str, recommendation: str, decision_impact: str, viz_fn):
     """Render one research-question block in a consistent executive-report layout."""
     with st.container(border=True):
-        st.markdown(f"#### RQ{number}: {question}")
+        st.markdown(f"#### {question}")
         st.markdown(f"**Finding:** {finding}")
         viz_fn()
         st.markdown(f"**Recommendation:** {recommendation}")
         st.markdown(f"**Decision Impact:** {decision_impact}")
+
+
+def _plot_default_correlations():
+    """Compute Pearson correlation between each candidate variable and the default target, and render a bar chart of |r|."""
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    cols = list(config.NUMERIC_FEATURES) + list(config.ORDINAL_CATEGORICAL_FEATURES)
+    rows = []
+    for c in cols:
+        if c not in cleaned_df.columns:
+            continue
+        pair = cleaned_df[[c, config.TARGET_COLUMN]].dropna()
+        if pair.shape[0] < 10:
+            continue
+        try:
+            r = pair[c].corr(pair[config.TARGET_COLUMN])
+        except Exception:
+            r = float('nan')
+        rows.append({'variable': c, 'pearson_r': r})
+
+    corr_df = (pd.DataFrame(rows).dropna().sort_values('pearson_r', key=lambda s: s.abs(), ascending=False))
+    corr_df['abs_pearson_r'] = corr_df['pearson_r'].abs()
+    corr_df['variable_label'] = corr_df['variable'].map(labels.column_label)
+    if corr_df.empty:
+        st.write("No sufficient data to compute correlations.")
+        return
+
+    fig, ax = plt.subplots(figsize=(9, max(4.5, 0.35 * len(corr_df))))
+    sns.barplot(x='abs_pearson_r', y='variable_label', data=corr_df, palette='rocket', ax=ax)
+    ax.set_xlabel('|Pearson r| (vs. default)')
+    ax.set_ylabel('Variable')
+    _ = ax.set_xlim(0, 1)
+    for i, r in enumerate(corr_df['abs_pearson_r']):
+        ax.text(r + 0.02, i, f"{r:.3f}", va='center', ha='left')
+    fig.tight_layout()
+    st.pyplot(fig)
 
 
 # RQ1 -----------------------------------------------------------------------
@@ -62,12 +100,12 @@ _research_question_block(
     "Prioritize verifying interest-rate-adjacent and DTI data quality at application time, since these fields "
     "carry outsized weight in the risk assessment.",
     "Directly informs which fields underwriters should scrutinize most closely.",
-    lambda: st.pyplot(eda_utils.plot_correlation_heatmap(cleaned_df, config.NUMERIC_FEATURES, title="Feature Correlation")[0]),
+    lambda: _plot_default_correlations(),
 )
 
 if not show_advanced_statistics:
     st.info(
-        "This page is focused on the executive summary for the highest-priority finding (RQ1). "
+        "This page is focused on the executive summary for the highest-priority question. "
         "Enable 'Show advanced statistics' in the left sidebar to view supplemental charts and deeper research-question detail.",
     )
 else:
@@ -119,7 +157,9 @@ else:
         )
 
         if segmentation_engine is not None:
-            ml_comparison = segmentation_engine.compare_with_supervised_models()
+            from src import config
+            selected_model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+            ml_comparison = segmentation_engine.compare_with_supervised_models(model_key=selected_model_key)
             _research_question_block(
                 "7", "Which borrower segments represent the highest lending risk, and can natural groups be observed before clustering?",
                 "Borrower segmentation identifies distinct financial-profile groups whose predicted default probability "

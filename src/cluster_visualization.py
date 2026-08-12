@@ -24,7 +24,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib.patches import Patch
 
-from src import utils
+from src import labels, utils
 from src.eda_utils import FIGSIZE_STANDARD, FIGSIZE_WIDE, PALETTE_DIVERGING, _apply_titles
 
 logger = utils.get_logger(__name__)
@@ -225,10 +225,14 @@ def plot_cluster_heatmap(
     fig, ax = plt.subplots(figsize=(max(8, 0.9 * len(features)), max(4, 0.7 * len(z_scores) + 1.5)))
     sns.heatmap(
         z_scores, annot=True, fmt=".2f", cmap=PALETTE_DIVERGING, center=0, ax=ax,
+        xticklabels=[labels.column_label(f) for f in features],
         cbar_kws={"label": "Standardized value (z-score vs. overall population)"},
     )
     ax.set_xlabel("")
     ax.set_ylabel("")
+    ax.tick_params(axis="x", rotation=45)
+    for tick in ax.get_xticklabels():
+        tick.set_ha("right")
     _apply_titles(ax, "Cluster Profile Heatmap", "Standardized mean feature value per segment (red = above average, blue = below)")
     fig.tight_layout()
     return fig
@@ -265,7 +269,7 @@ def plot_parallel_coordinates(
         ax.plot(x_positions, z_scores.loc[cluster_id, list(features)], marker="o", color=_cluster_color(int(cluster_id)), label=label, linewidth=2)
 
     ax.set_xticks(list(x_positions))
-    ax.set_xticklabels(features, rotation=30, ha="right")
+    ax.set_xticklabels([labels.column_label(f) for f in features], rotation=30, ha="right")
     ax.axhline(0, color="gray", linewidth=0.8, linestyle="--")
     ax.set_ylabel("Standardized value (z-score)")
     ax.legend(frameon=False, loc="best", fontsize=9)
@@ -310,7 +314,7 @@ def plot_radar_chart(
         ax.fill(angles, values, alpha=0.08, color=_cluster_color(int(cluster_id)))
 
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(features, fontsize=9)
+    ax.set_xticklabels([labels.column_label(f) for f in features], fontsize=9)
     ax.set_title("Cluster Profiles -- Radar Chart", fontsize=13, fontweight="bold", y=1.08)
     ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.1), frameon=False, fontsize=9)
     fig.tight_layout()
@@ -371,7 +375,7 @@ def plot_feature_by_cluster(
     grouped = profile_table.groupby(cluster_column)[feature].agg(agg).sort_index()
     names = [segment_names.get(int(c), f"Cluster {c}") if segment_names else f"Cluster {c}" for c in grouped.index]
     colors = [_cluster_color(int(c)) for c in grouped.index]
-    label = feature_label or feature.replace("_", " ").title()
+    label = feature_label or labels.column_label(feature)
 
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)
     bars = ax.bar(names, grouped.values, color=colors)
@@ -404,7 +408,7 @@ def plot_feature_distribution_by_cluster(
     -------
     matplotlib.figure.Figure
     """
-    label = feature_label or feature.replace("_", " ").title()
+    label = feature_label or labels.column_label(feature)
     plot_df = profile_table[[cluster_column, feature]].copy()
     unique_clusters = sorted(plot_df[cluster_column].unique())
     plot_df["segment_label"] = plot_df[cluster_column].apply(

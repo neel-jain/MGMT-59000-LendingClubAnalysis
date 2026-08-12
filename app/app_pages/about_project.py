@@ -35,16 +35,7 @@ st.markdown(
 
 render_section_header("Research Questions")
 st.markdown(
-    """
-1. Which borrower characteristics appear associated with default?
-2. Do LendingClub grades appear predictive of default?
-3. Which variables are related to higher interest rates?
-4. Does income relate to repayment success?
-5. Does DTI influence default?
-6. Does employment length matter?
-7. Which borrower segments represent the highest lending risk, and can natural groups be observed
-   before clustering?
-"""
+  "Which borrower characteristics appear associated with default?"
 )
 
 render_section_header("PDID Framework")

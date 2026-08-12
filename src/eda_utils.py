@@ -36,7 +36,7 @@ import pandas as pd
 import seaborn as sns
 from scipy import stats
 
-from src import config, utils
+from src import config, labels, utils
 
 logger = utils.get_logger(__name__)
 
@@ -337,19 +337,24 @@ def plot_categorical_distribution(
     if not order_by_count:
         counts = counts.sort_index()
 
+    # Map raw category values to friendly labels before plotting so the
+    # bars and their tick labels stay aligned.
+    category_labels = [labels.category_label(column, v) for v in counts.index]
+    column_label = labels.column_label(column)
+
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)
     if horizontal:
-        sns.barplot(y=counts.index.astype(str), x=counts.values, ax=ax,
-                    palette=PALETTE_SEQUENTIAL, hue=counts.index.astype(str), legend=False)
+        sns.barplot(y=category_labels, x=counts.values, ax=ax,
+                    palette=PALETTE_SEQUENTIAL, hue=category_labels, legend=False)
         ax.set_xlabel("Number of Loans")
-        ax.set_ylabel(column)
+        ax.set_ylabel(column_label)
         for i, v in enumerate(counts.values):
             ax.text(v, i, f" {v:,}", va="center", fontsize=9)
     else:
-        sns.barplot(x=counts.index.astype(str), y=counts.values, ax=ax,
-                    palette=PALETTE_SEQUENTIAL, hue=counts.index.astype(str), legend=False)
+        sns.barplot(x=category_labels, y=counts.values, ax=ax,
+                    palette=PALETTE_SEQUENTIAL, hue=category_labels, legend=False)
         ax.set_ylabel("Number of Loans")
-        ax.set_xlabel(column)
+        ax.set_xlabel(column_label)
         ax.tick_params(axis="x", rotation=45)
         for label in ax.get_xticklabels():
             label.set_ha("right")
@@ -389,7 +394,7 @@ def plot_numeric_distribution(
                label=f"Mean = {series.mean():,.1f}")
     ax.axvline(series.median(), color="black", linestyle=":", linewidth=1.5,
                label=f"Median = {series.median():,.1f}")
-    ax.set_xlabel(column)
+    ax.set_xlabel(labels.column_label(column))
     ax.set_ylabel("Frequency")
     ax.legend(frameon=False)
     _apply_titles(ax, title, subtitle)
@@ -406,9 +411,12 @@ def plot_boxplot(
     if by:
         sns.boxplot(data=df, x=by, y=column, ax=ax, palette=PALETTE_SEQUENTIAL,
                     hue=by, legend=False)
+        ax.set_xlabel(labels.column_label(by))
+        ax.set_xticklabels([labels.category_label(by, t.get_text()) for t in ax.get_xticklabels()])
         ax.tick_params(axis="x", rotation=30)
     else:
         sns.boxplot(data=df, y=column, ax=ax, color=COLOR_PAID)
+    ax.set_ylabel(labels.column_label(column))
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()
     return fig
@@ -422,6 +430,9 @@ def plot_violin(
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)
     sns.violinplot(data=df, x=by, y=column, ax=ax, palette=PALETTE_DIVERGING,
                     hue=by, legend=False, cut=0)
+    ax.set_xlabel(labels.column_label(by))
+    ax.set_ylabel(labels.column_label(column))
+    ax.set_xticklabels([labels.category_label(by, t.get_text()) for t in ax.get_xticklabels()])
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()
     return fig
@@ -444,10 +455,10 @@ def plot_scatter(
     palette = {0: COLOR_PAID, 1: COLOR_DEFAULT} if hue == config.TARGET_COLUMN else None
     sns.scatterplot(data=plot_df, x=x, y=y, hue=hue, ax=ax, alpha=0.5,
                      palette=palette, s=25)
-    ax.set_xlabel(x)
-    ax.set_ylabel(y)
+    ax.set_xlabel(labels.column_label(x))
+    ax.set_ylabel(labels.column_label(y))
     if hue:
-        ax.legend(title=hue, frameon=False)
+        ax.legend(title=labels.column_label(hue), frameon=False)
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()
     return fig
@@ -461,8 +472,8 @@ def plot_hexbin(
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)
     hb = ax.hexbin(df[x], df[y], gridsize=gridsize, cmap="Blues", mincnt=1)
     fig.colorbar(hb, ax=ax, label="Loan Count")
-    ax.set_xlabel(x)
-    ax.set_ylabel(y)
+    ax.set_xlabel(labels.column_label(x))
+    ax.set_ylabel(labels.column_label(y))
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()
     return fig
@@ -491,10 +502,15 @@ def plot_correlation_heatmap(
     corr = df[list(columns)].corr(method=method)
     fig, ax = plt.subplots(figsize=(min(1.0 * len(columns) + 3, 14), min(0.8 * len(columns) + 3, 12)))
     mask = np.triu(np.ones_like(corr, dtype=bool), k=1)
+    tick_labels = [labels.column_label(c) for c in corr.columns]
     sns.heatmap(
         corr, mask=mask, annot=True, fmt=".2f", cmap=PALETTE_DIVERGING, center=0,
-        square=True, linewidths=0.5, cbar_kws={"label": f"{method.title()} r"}, ax=ax,
+        square=True, linewidths=0.5, cbar_kws={"label": f"{method.title()} r"},
+        xticklabels=tick_labels, yticklabels=tick_labels, ax=ax,
     )
+    ax.tick_params(axis="x", rotation=45)
+    for tick in ax.get_xticklabels():
+        tick.set_ha("right")
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()
     return fig, corr
@@ -527,6 +543,7 @@ def plot_missing_value_heatmap(df: pd.DataFrame, title: str = "Missing Value Hea
     """Heatmap showing the location of missing values across rows/columns."""
     fig, ax = plt.subplots(figsize=FIGSIZE_WIDE)
     sns.heatmap(df.isna(), cbar=False, cmap=["#EAECEE", COLOR_DEFAULT], ax=ax)
+    ax.set_xticklabels([labels.column_label(c) for c in df.columns], rotation=90)
     ax.set_xlabel("Variable")
     ax.set_ylabel("Row Index")
     _apply_titles(ax, title, "Colored cells indicate a missing value at that row/column")
@@ -544,7 +561,8 @@ def plot_missing_value_bar(df: pd.DataFrame, title: str = "Missing Values by Col
                 fontsize=12, transform=ax.transAxes)
         ax.axis("off")
     else:
-        sns.barplot(x=missing_pct.values, y=missing_pct.index, ax=ax, color=COLOR_DEFAULT)
+        sns.barplot(x=missing_pct.values, y=[labels.column_label(c) for c in missing_pct.index],
+                    ax=ax, color=COLOR_DEFAULT)
         ax.set_xlabel("Missing (%)")
     _apply_titles(ax, title)
     fig.tight_layout()
@@ -565,7 +583,7 @@ def plot_outlier_boxplots(
     axes = np.array(axes).reshape(-1)
     for i, col in enumerate(columns):
         sns.boxplot(y=df[col].dropna(), ax=axes[i], color=COLOR_PAID)
-        axes[i].set_title(col, fontsize=11, fontweight="bold")
+        axes[i].set_title(labels.column_label(col), fontsize=11, fontweight="bold")
         axes[i].set_ylabel("")
     for j in range(len(columns), len(axes)):
         axes[j].axis("off")
@@ -652,10 +670,14 @@ def plot_default_rate_by_group(
             ha="center", va="bottom", fontsize=8.5,
         )
     ax.set_ylabel("Default Rate (%)")
-    ax.set_xlabel(group_column)
-    ax.tick_params(axis="x", rotation=45)
-    for label in ax.get_xticklabels():
-        label.set_ha("right")
+    ax.set_xlabel(labels.column_label(group_column))
+    # Keep `summary` (returned to the caller) on raw group values; only the
+    # displayed tick labels are humanized.
+    ax.set_xticks(range(len(plot_summary)))
+    ax.set_xticklabels(
+        [labels.category_label(group_column, v) for v in plot_summary.index],
+        rotation=45, ha="right",
+    )
     ax.legend(frameon=False)
     _apply_titles(ax, title, subtitle)
     fig.tight_layout()

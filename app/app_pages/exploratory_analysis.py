@@ -24,7 +24,7 @@ from common import (
     advanced_statistics_enabled, apply_borrower_filters, apply_global_style, load_cleaned_dataset,
     render_missing_artifact_notice, render_page_header, render_section_header,
 )
-from src import config, eda_utils
+from src import config, eda_utils, labels
 
 apply_global_style()
 render_page_header(
@@ -85,9 +85,9 @@ render_section_header("Default Rate by Borrower Group")
 
 group_choice = st.selectbox(
     "Group default rate by:", ["grade", "purpose", "home_ownership"],
-    format_func=lambda c: c.replace("_", " ").title(),
+    format_func=lambda c: labels.column_label(c),
 )
-fig, _ = eda_utils.plot_default_rate_by_group(df, group_choice, title=f"Default Rate by {group_choice.replace('_', ' ').title()}")
+fig, _ = eda_utils.plot_default_rate_by_group(df, group_choice, title=f"Default Rate by {labels.column_label(group_choice)}")
 st.pyplot(fig)
 
 # ---------------------------------------------------------------------------
@@ -109,18 +109,20 @@ if advanced_statistics_enabled():
     col1, col2 = st.columns(2)
     x_options = ["loan_amnt", "int_rate", "annual_inc", "dti"]
     with col1:
-        x_var = st.selectbox("X axis", x_options, index=0, key="scatter_x")
+        x_var = st.selectbox("X axis", x_options, index=0, key="scatter_x",
+                             format_func=lambda c: labels.column_label(c))
     with col2:
-        y_var = st.selectbox("Y axis", x_options, index=1, key="scatter_y")
+        y_var = st.selectbox("Y axis", x_options, index=1, key="scatter_y",
+                             format_func=lambda c: labels.column_label(c))
 
     if x_var != y_var:
         import matplotlib.pyplot as plt
         fig, ax = plt.subplots(figsize=(8, 5))
         scatter = ax.scatter(df[x_var], df[y_var], c=df["default_flag"], cmap="RdBu_r", alpha=0.5, s=18)
-        ax.set_xlabel(x_var.replace("_", " ").title())
-        ax.set_ylabel(y_var.replace("_", " ").title())
+        ax.set_xlabel(labels.column_label(x_var))
+        ax.set_ylabel(labels.column_label(y_var))
         ax.set_title(
-            f"{x_var.replace('_', ' ').title()} vs. {y_var.replace('_', ' ').title()} (colored by default)",
+            f"{labels.column_label(x_var)} vs. {labels.column_label(y_var)} (colored by default)",
             fontsize=12, fontweight="bold", loc="left",
         )
         fig.colorbar(scatter, ax=ax, label="Default (1) / Fully Paid (0)")
