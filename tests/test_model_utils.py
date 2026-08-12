@@ -353,3 +353,20 @@ def test_plot_threshold_analysis_chart_runs():
     )
     fig = model_utils.plot_threshold_analysis_chart(table, recommended_threshold=0.35, title="Test")
     assert fig is not None
+
+
+def test_plot_learning_curve_chart_unwraps_calibrated_estimator(train_val_test_split):
+    """A CalibratedClassifierCV(cv='prefit') used to crash plot_learning_curve_chart
+    (learning_curve re-fits the estimator, but a prefit calibrator is never fitted on
+    the clone). It should now be unwrapped to the base pipeline and return a Figure."""
+    X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split
+    pipeline = model_utils.build_logistic_regression_pipeline()
+    pipeline.fit(X_train, y_train)
+    calibrator = model_utils.CalibratedClassifierCV(estimator=pipeline, method="sigmoid", cv="prefit")
+    calibrator.fit(X_val, y_val)
+
+    fig = model_utils.plot_learning_curve_chart(
+        calibrator, X_train, y_train, title="Test",
+        train_sizes=[0.3, 0.6, 1.0], cv_folds=3,
+    )
+    assert fig is not None

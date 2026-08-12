@@ -895,8 +895,15 @@ def plot_learning_curve_chart(
     would likely help).
     """
     cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=config.RANDOM_STATE)
+    # A CalibratedClassifierCV(cv="prefit") cannot be re-fit by
+    # learning_curve (the clone it fits is never pre-fit, so every CV
+    # fold raises NotFittedError). Unwrap to the base estimator pipeline
+    # -- which is exactly what a learning curve is meant to diagnose.
+    estimator = pipeline
+    if isinstance(pipeline, CalibratedClassifierCV):
+        estimator = pipeline.estimator
     sizes, train_scores, val_scores = learning_curve(
-        pipeline, X, y, cv=cv, scoring=scoring, train_sizes=train_sizes,
+        estimator, X, y, cv=cv, scoring=scoring, train_sizes=train_sizes,
         n_jobs=-1, random_state=config.RANDOM_STATE,
     )
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)
@@ -936,8 +943,14 @@ def plot_validation_curve_chart(
         Candidate values for `param_name`.
     """
     cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=config.RANDOM_STATE)
+    # Same unwrap as plot_learning_curve_chart: a fitted
+    # CalibratedClassifierCV(cv="prefit") cannot be re-fit by the curve
+    # helpers, so evaluate the base estimator pipeline instead.
+    estimator = pipeline
+    if isinstance(pipeline, CalibratedClassifierCV):
+        estimator = pipeline.estimator
     train_scores, val_scores = validation_curve(
-        pipeline, X, y, param_name=param_name, param_range=param_range,
+        estimator, X, y, param_name=param_name, param_range=param_range,
         cv=cv, scoring=scoring, n_jobs=-1,
     )
     fig, ax = plt.subplots(figsize=FIGSIZE_STANDARD)

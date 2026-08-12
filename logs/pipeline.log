@@ -9162,3 +9162,73 @@ TypeError: CalibratedClassifierCV.__init__() got an unexpected keyword argument 
 2026-08-12 15:26:35 | INFO     | app | Streamlit session started. Production model=random_forest, project root=C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone
 2026-08-12 15:26:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
 2026-08-12 15:26:54 | INFO     | app | Streamlit session started. Production model=random_forest, project root=C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone
+2026-08-12 16:00:55 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 16:00:55 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 16:00:55 | INFO     | src.risk_scoring | Loading Random Forest pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:00:55 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=Random Forest, decision_threshold=0.15
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:00:55 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:02:22 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 16:02:22 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 16:02:22 | INFO     | src.risk_scoring | Loading Random Forest pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:02:22 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=Random Forest, decision_threshold=0.15
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:02:22 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:48 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 16:02:48 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 16:02:48 | INFO     | src.risk_scoring | Loading Random Forest pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 16:02:49 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=Random Forest, decision_threshold=0.15
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 16:02:49 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 16:02:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:52 | INFO     | src.model_utils | Starting GridSearchCV over 2 candidate combinations.
+2026-08-12 16:02:52 | INFO     | src.model_utils | GridSearchCV complete in 0.06s. Best roc_auc=0.6691. Best params: {'classifier__C': 0.1, 'classifier__solver': 'liblinear'}
+2026-08-12 16:02:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:52 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=2.
+2026-08-12 16:02:52 | INFO     | src.model_utils | RandomizedSearchCV complete in 0.75s. Best roc_auc=0.6011. Best params: {'classifier__n_estimators': 100, 'classifier__max_depth': 5}
+2026-08-12 16:02:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:02:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:01 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:15 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:17 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:17 | INFO     | src.model_utils | Starting GridSearchCV over 2 candidate combinations.
+2026-08-12 16:04:17 | INFO     | src.model_utils | GridSearchCV complete in 0.04s. Best roc_auc=0.6691. Best params: {'classifier__C': 0.1, 'classifier__solver': 'liblinear'}
+2026-08-12 16:04:17 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:17 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=2.
+2026-08-12 16:04:18 | INFO     | src.model_utils | RandomizedSearchCV complete in 0.24s. Best roc_auc=0.6011. Best params: {'classifier__n_estimators': 100, 'classifier__max_depth': 5}
+2026-08-12 16:04:18 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:18 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 16:04:18 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
