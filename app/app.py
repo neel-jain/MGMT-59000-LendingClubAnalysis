@@ -29,8 +29,10 @@ if str(APP_DIR) not in sys.path:
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from common import apply_global_style, load_cleaned_dataset, render_global_sidebar_controls  # noqa: E402
-from src import config, utils  # noqa: E402
+from common import (  # noqa: E402
+    apply_global_style, get_production_model_key, load_cleaned_dataset, render_global_sidebar_controls,
+)
+from src import utils  # noqa: E402
 
 logger = utils.get_logger("app")
 
@@ -41,7 +43,7 @@ logger = utils.get_logger("app")
 if "_app_session_started" not in st.session_state:
     logger.info(
         "Streamlit session started. Production model=%s, project root=%s",
-        config.PRODUCTION_MODEL_KEY, PROJECT_ROOT,
+        get_production_model_key(), PROJECT_ROOT,
     )
     st.session_state["_app_session_started"] = True
 
@@ -62,7 +64,7 @@ pages = {
     "Analysis": [
         st.Page(str(PAGES_DIR / "exploratory_analysis.py"), title="Exploratory Analysis", icon="🔍"),
         st.Page(str(PAGES_DIR / "business_insights.py"), title="Business Insights", icon="💡"),
-        st.Page(str(PAGES_DIR / "model_explainability.py"), title="Regression Model", icon="🧠"),
+        st.Page(str(PAGES_DIR / "model_explainability.py"), title="Model Explainability", icon="🧠"),
     ],
     "Decision Tools": [
         st.Page(str(PAGES_DIR / "borrower_risk_prediction.py"), title="Borrower Risk Prediction", icon="🎯"),

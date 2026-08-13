@@ -23,7 +23,7 @@ import streamlit as st
 
 from common import (
     apply_global_style, download_dataframe_button, download_report_buttons, get_explainability_engine,
-    get_global_explanation, load_phase3_reports,
+    get_global_explanation, get_production_model_key, load_phase3_reports,
     load_splits_cached, render_executive_summary_box, render_missing_artifact_notice,
     render_page_header, render_section_header,
 )
@@ -32,11 +32,11 @@ from src import config, labels, model_utils
 
 apply_global_style()
 render_page_header(
-    "Regression Model",
-    "Integrated regression diagnostics and SHAP-based explanation for the production scoring model.",
+    "Model Explainability",
+    "SHAP-based explanation and diagnostics for the production scoring model.",
 )
 
-model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+model_key = st.session_state.get("selected_model_key", get_production_model_key())
 engine = get_explainability_engine(model_key)
 
 if engine is None:
@@ -46,12 +46,12 @@ if engine is None:
 _, _, X_test, _, _, y_test = load_splits_cached()
 
 # ---------------------------------------------------------------------------
-# Regression Model diagnostics
+# Model diagnostics
 # ---------------------------------------------------------------------------
 show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
 
 if show_advanced_statistics:
-    render_section_header("Regression Model Overview")
+    render_section_header("Model Overview")
 
     reports = load_phase3_reports()
     if not reports:
@@ -59,7 +59,7 @@ if show_advanced_statistics:
         st.stop()
 
     comparison_table = reports["comparison_table"]
-    # Filter comparison table to allowed models in the dashboard (excludes xgboost if commented out)
+    # Filter comparison table to allowed models in the dashboard.
     from src import model_utils
     allowed_display_names = [model_utils.MODEL_DISPLAY_NAMES[k] for k in MODEL_KEYS]
     comparison_table = comparison_table[comparison_table['model'].isin(allowed_display_names)].reset_index(drop=True)
@@ -71,14 +71,17 @@ if show_advanced_statistics:
     st.dataframe(comparison_table.rename(columns=labels.column_label), hide_index=True)
     download_dataframe_button(comparison_table, "⬇ Download Comparison Table (CSV)", "model_comparison_table.csv")
 
+    # The recommended name comes from the RESOLVED production model (not the
+    # CSV row order) so this message can never disagree with the engines.
+    production_name = model_utils.MODEL_DISPLAY_NAMES[get_production_model_key()]
     best_model_row = comparison_table.iloc[0]
     st.success(
-        f"**Executive Recommendation:** {best_model_row['model']} ranks #1 by test ROC-AUC "
+        f"**Executive Recommendation:** {production_name} ranks #1 by test ROC-AUC "
         f"({best_model_row['roc_auc']:.3f}) and is the current production scoring model.",
         icon="🏆",
     )
 
-    render_section_header("Regression Model Diagnostics")
+    render_section_header("Model Diagnostics")
     model_keys = ["logistic_regression", "random_forest", "xgboost"]
     selected = st.multiselect(
         "Compare models:", model_keys, default=model_keys,

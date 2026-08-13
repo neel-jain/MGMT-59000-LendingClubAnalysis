@@ -31,17 +31,17 @@ from src import model_utils
 apply_global_style()
 render_page_header(
     "Model Comparison",
-    "Archived model comparison page. Detailed regression diagnostics have been moved to the Regression Model page.",
+    "Archived model comparison page. Detailed model diagnostics have been moved to the Model Explainability page.",
 )
 
 show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
 if not show_advanced_statistics:
     st.info(
-        "This page no longer shows comparison diagnostics. Open the Regression Model page for the integrated analysis.",
+        "This page no longer shows comparison diagnostics. Open the Model Explainability page for the integrated analysis.",
         icon="ℹ️",
     )
 else:
     st.info(
-        "Advanced statistics are enabled, but model comparison diagnostics now live on the Regression Model tab.",
+        "Advanced statistics are enabled, but model comparison diagnostics now live on the Model Explainability tab.",
         icon="ℹ️",
     )

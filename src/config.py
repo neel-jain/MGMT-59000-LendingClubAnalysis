@@ -426,14 +426,14 @@ LEARNING_CURVE_APP_TRAIN_SIZES: List[float] = [0.2, 0.4, 0.6, 0.8, 1.0]
 # constants: which model Phase 4A treats as "production", file paths for
 # serialized explainability artifacts, and SHAP computation parameters.
 
-# The model Phase 3's comparison table recommended as the production
-# scorer (see notebooks/MGMT590_LendingClub_Modeling_Phase3.ipynb,
-# Section 7). Centralized here so every Phase 4A module and the eventual
-# Streamlit app default to the same model without re-deciding it.
-PRODUCTION_MODEL_KEY: str = "random_forest"
-# Historically this was XGBoost in Phase 3. Commented out to make it
-# easy to restore later if desired.
-# PRODUCTION_MODEL_KEY: str = "xgboost"
+# OFFLINE/FALLBACK default used by notebooks/tests and by the app only
+# when reports/model_comparison_table.csv is absent. The Streamlit app
+# resolves the real production model at runtime from the comparison
+# table (the row with the highest TEST ROC-AUC) via
+# model_utils.resolve_production_model_key() -- this constant no longer
+# determines the app's production model. Kept in sync with the current
+# comparison-table winner so the fallback matches reality.
+PRODUCTION_MODEL_KEY: str = "xgboost"
 
 # SHAP computation is O(background_size x n_samples_explained) for
 # TreeExplainer and can be considerably more expensive for other

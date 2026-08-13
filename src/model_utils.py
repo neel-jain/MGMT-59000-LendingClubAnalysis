@@ -1162,6 +1162,47 @@ def build_model_comparison_table(results: List[ModelResult]) -> pd.DataFrame:
     return table
 
 
+def resolve_production_model_key(comparison_table: pd.DataFrame) -> str:
+    """
+    Choose the production scoring model from the Phase 3 comparison table:
+    the row with the highest TEST ROC-AUC, reverse-mapped from its display
+    name back to a machine key via `MODEL_DISPLAY_NAMES`.
+
+    This is the single source of truth for "which model is production" --
+    the Streamlit app resolves it at runtime so the constant
+    `config.PRODUCTION_MODEL_KEY` no longer determines the app's model.
+
+    Parameters
+    ----------
+    comparison_table : pd.DataFrame
+        As persisted to `config.MODEL_COMPARISON_TABLE_PATH` by
+        `build_model_comparison_table` (one row per model, with a `model`
+        display-name column and a `roc_auc` column). Input order is
+        irrelevant; the max is computed directly, not from the `rank`
+        column.
+
+    Returns
+    -------
+    str
+        The model key with the highest test ROC-AUC, or
+        `config.PRODUCTION_MODEL_KEY` whenever the winner cannot be
+        confidently identified (empty table, missing/non-numeric
+        `roc_auc`, or a `model` name that does not map back to a key).
+    """
+    if comparison_table is None or comparison_table.empty:
+        return config.PRODUCTION_MODEL_KEY
+    if "model" not in comparison_table.columns or "roc_auc" not in comparison_table.columns:
+        return config.PRODUCTION_MODEL_KEY
+    roc_auc = pd.to_numeric(comparison_table["roc_auc"], errors="coerce")
+    if roc_auc.isna().all():
+        return config.PRODUCTION_MODEL_KEY
+    # idxmax() returns the first occurrence of the max, so a tie resolves
+    # deterministically rather than depending on row order from the CSV.
+    best_display_name = comparison_table.loc[roc_auc.idxmax(), "model"]
+    reverse_map = {display: key for key, display in MODEL_DISPLAY_NAMES.items()}
+    return reverse_map.get(best_display_name, config.PRODUCTION_MODEL_KEY)
+
+
 # ---------------------------------------------------------------------------
 # 9. END-TO-END ORCHESTRATION
 # ---------------------------------------------------------------------------

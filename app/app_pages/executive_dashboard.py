@@ -24,8 +24,8 @@ import streamlit as st
 
 from common import (
     apply_borrower_filters, apply_global_style, get_explainability_engine, get_global_explanation,
-    load_cleaned_dataset, render_executive_summary_box, render_missing_artifact_notice,
-    render_page_header, render_section_header,
+    get_production_model_key, load_cleaned_dataset, render_executive_summary_box,
+    render_missing_artifact_notice, render_page_header, render_section_header,
 )
 
 apply_global_style()
@@ -93,7 +93,7 @@ with col2:
 # ---------------------------------------------------------------------------
 render_section_header("Top Risk Factors (Production Model)")
 
-model_key = st.session_state.get("selected_model_key", "xgboost")
+model_key = st.session_state.get("selected_model_key", get_production_model_key())
 explain_engine = get_explainability_engine(model_key)
 
 if explain_engine is None:

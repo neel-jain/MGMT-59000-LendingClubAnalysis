@@ -25,9 +25,9 @@ import pandas as pd
 import streamlit as st
 
 from common import (
-    apply_global_style, download_report_buttons, get_explainability_engine, get_risk_engine,
-    load_cleaned_dataset, render_executive_summary_box, render_missing_artifact_notice,
-    render_page_header, render_section_header,
+    apply_global_style, download_report_buttons, get_explainability_engine, get_production_model_key,
+    get_risk_engine, load_cleaned_dataset, render_executive_summary_box,
+    render_missing_artifact_notice, render_page_header, render_section_header,
 )
 from src import config, labels, utils
 
@@ -39,7 +39,7 @@ render_page_header(
     "Enter a borrower's information to generate a live risk assessment.",
 )
 
-model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+model_key = st.session_state.get("selected_model_key", get_production_model_key())
 risk_engine = get_risk_engine(model_key)
 explain_engine = get_explainability_engine(model_key)
 show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)

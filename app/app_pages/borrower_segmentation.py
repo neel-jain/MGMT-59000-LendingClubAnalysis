@@ -22,7 +22,8 @@ import streamlit as st
 
 from common import (
     apply_global_style, download_dataframe_button, download_report_buttons, get_cluster_visualization,
-    get_segmentation_engine, render_missing_artifact_notice, render_page_header, render_section_header,
+    get_production_model_key, get_segmentation_engine, render_missing_artifact_notice,
+    render_page_header, render_section_header,
 )
 from src import cluster_visualization as cv
 from src import labels, utils
@@ -121,8 +122,7 @@ if show_advanced_statistics:
 render_section_header("Relationship to the Supervised Models")
 
 try:
-    from src import config
-    selected_model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+    selected_model_key = st.session_state.get("selected_model_key", get_production_model_key())
     ml_comparison = engine.compare_with_supervised_models(model_key=selected_model_key)
     st.dataframe(
         ml_comparison[["segment_name", "n_borrowers", "mean_predicted_probability", "average_default_rate", "risk_tier"]]

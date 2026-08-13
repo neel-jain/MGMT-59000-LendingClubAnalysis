@@ -9371,3 +9371,280 @@ TypeError: CalibratedClassifierCV.__init__() got an unexpected keyword argument 
 2026-08-12 16:22:31 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
 2026-08-12 16:23:20 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
 2026-08-12 16:23:52 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:39 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:42 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:42 | INFO     | src.model_utils | Starting GridSearchCV over 2 candidate combinations.
+2026-08-12 21:49:42 | INFO     | src.model_utils | GridSearchCV complete in 0.04s. Best roc_auc=0.6691. Best params: {'classifier__C': 0.1, 'classifier__solver': 'liblinear'}
+2026-08-12 21:49:42 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:42 | INFO     | src.model_utils | Starting RandomizedSearchCV with n_iter=2.
+2026-08-12 21:49:42 | INFO     | src.model_utils | RandomizedSearchCV complete in 0.24s. Best roc_auc=0.6011. Best params: {'classifier__n_estimators': 100, 'classifier__max_depth': 5}
+2026-08-12 21:49:42 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:42 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:42 | INFO     | src.utils | Built preprocessing ColumnTransformer: 14 numeric, 6 one-hot, 1 ordinal features.
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:49:59 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:49:59 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:49:59 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:49:59 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:49:59 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:49:59 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:50:00 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:50:00 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:50:00 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:50:00 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:50:00 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:50:00 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:50:00 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:50:00 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:50:00 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 21:50:00 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:50:00 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:50:00 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-12 21:50:00 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 15200 borrowers.
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:50:00 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-12 21:50:03 | INFO     | src.cluster_analysis | k=2: inertia=164747.8, silhouette=0.185, calinski_harabasz=3030.6, davies_bouldin=2.104
+2026-08-12 21:50:05 | INFO     | src.cluster_analysis | k=3: inertia=149313.9, silhouette=0.128, calinski_harabasz=2457.3, davies_bouldin=2.108
+2026-08-12 21:50:06 | INFO     | src.cluster_analysis | k=4: inertia=139288.7, silhouette=0.115, calinski_harabasz=2120.5, davies_bouldin=2.086
+2026-08-12 21:50:08 | INFO     | src.cluster_analysis | k=5: inertia=132331.9, silhouette=0.119, calinski_harabasz=1873.6, davies_bouldin=1.947
+2026-08-12 21:50:10 | INFO     | src.cluster_analysis | k=6: inertia=126155.3, silhouette=0.103, calinski_harabasz=1721.0, davies_bouldin=1.980
+2026-08-12 21:50:10 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:50:10 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:50:10 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:50:10 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:50:10 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:50:10 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\pipelines\preprocessing_pipeline.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\logistic_regression_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\random_forest_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:35 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:35 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:35 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:35 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:35 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:51:35 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:36 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:36 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:36 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:36 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:36 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:36 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:36 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:36 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:36 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:36 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-12 21:51:36 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 15200 borrowers.
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:51:36 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-12 21:51:39 | INFO     | src.cluster_analysis | k=2: inertia=164747.8, silhouette=0.185, calinski_harabasz=3030.6, davies_bouldin=2.104
+2026-08-12 21:51:41 | INFO     | src.cluster_analysis | k=3: inertia=149313.9, silhouette=0.128, calinski_harabasz=2457.3, davies_bouldin=2.108
+2026-08-12 21:51:42 | INFO     | src.cluster_analysis | k=4: inertia=139288.7, silhouette=0.115, calinski_harabasz=2120.5, davies_bouldin=2.086
+2026-08-12 21:51:44 | INFO     | src.cluster_analysis | k=5: inertia=132331.9, silhouette=0.119, calinski_harabasz=1873.6, davies_bouldin=1.947
+2026-08-12 21:51:45 | INFO     | src.cluster_analysis | k=6: inertia=126155.3, silhouette=0.103, calinski_harabasz=1721.0, davies_bouldin=1.980
+2026-08-12 21:51:46 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:46 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:46 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:46 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:46 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:51:46 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'pub_rec' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:46 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:46 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-12 21:51:46 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 15200 borrowers.
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:51:46 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-12 21:51:47 | INFO     | src.cluster_analysis | k=2: inertia=164747.8, silhouette=0.185, calinski_harabasz=3030.6, davies_bouldin=2.104
+2026-08-12 21:51:49 | INFO     | src.cluster_analysis | k=3: inertia=149313.9, silhouette=0.128, calinski_harabasz=2457.3, davies_bouldin=2.108
+2026-08-12 21:51:51 | INFO     | src.cluster_analysis | k=4: inertia=139288.7, silhouette=0.115, calinski_harabasz=2120.5, davies_bouldin=2.086
+2026-08-12 21:51:52 | INFO     | src.cluster_analysis | k=5: inertia=132331.9, silhouette=0.119, calinski_harabasz=1873.6, davies_bouldin=1.947
+2026-08-12 21:51:54 | INFO     | src.cluster_analysis | k=6: inertia=126155.3, silhouette=0.103, calinski_harabasz=1721.0, davies_bouldin=1.980
+2026-08-12 21:51:54 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:54 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:54 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:51:54 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:51:54 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:54 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:54 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:54 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:54 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:51:54 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:51:55 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:55 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:55 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:51:55 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:51:55 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 21:51:55 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:51:55 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:51:55 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-12 21:51:55 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 15200 borrowers.
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:51:55 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-12 21:51:56 | INFO     | src.cluster_analysis | k=2: inertia=164747.8, silhouette=0.185, calinski_harabasz=3030.6, davies_bouldin=2.104
+2026-08-12 21:51:58 | INFO     | src.cluster_analysis | k=3: inertia=149313.9, silhouette=0.128, calinski_harabasz=2457.3, davies_bouldin=2.108
+2026-08-12 21:52:00 | INFO     | src.cluster_analysis | k=4: inertia=139288.7, silhouette=0.115, calinski_harabasz=2120.5, davies_bouldin=2.086
+2026-08-12 21:52:01 | INFO     | src.cluster_analysis | k=5: inertia=132331.9, silhouette=0.119, calinski_harabasz=1873.6, davies_bouldin=1.947
+2026-08-12 21:52:03 | INFO     | src.cluster_analysis | k=6: inertia=126155.3, silhouette=0.103, calinski_harabasz=1721.0, davies_bouldin=1.980
+2026-08-12 21:52:03 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:52:03 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:52:03 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:52:03 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:52:03 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:52:03 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:52:03 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\processed\lendingclub_indiana_cleaned.csv — shape=(21716, 140)
+2026-08-12 21:52:03 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:52:03 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:52:03 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:52:03 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:52:03 | INFO     | src.explainability | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:03 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)
+2026-08-12 21:52:04 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:52:04 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:52:04 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:52:04 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:52:04 | INFO     | src.explainability | ExplainabilityEngine ready: model=XGBoost, explainer=TreeExplainer, n_features=41, background_n=100
+2026-08-12 21:52:04 | INFO     | src.configurable_thresholds | Loaded risk threshold configuration from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\risk_threshold_config.json
+2026-08-12 21:52:04 | INFO     | src.configurable_thresholds | Risk threshold configuration validated successfully.
+2026-08-12 21:52:04 | INFO     | src.segmentation_engine | SegmentationEngine constructed: algorithm=kmeans, n_clusters=4
+2026-08-12 21:52:04 | INFO     | src.segmentation_engine | Fitting SegmentationEngine on 15200 borrowers.
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:52:04 | INFO     | src.cluster_analysis | Built clustering preprocessor: 14 numeric + 1 ordinal features (categorical one-hot columns excluded).
+2026-08-12 21:52:06 | INFO     | src.cluster_analysis | k=2: inertia=164747.8, silhouette=0.185, calinski_harabasz=3030.6, davies_bouldin=2.104
+2026-08-12 21:52:08 | INFO     | src.cluster_analysis | k=3: inertia=149313.9, silhouette=0.128, calinski_harabasz=2457.3, davies_bouldin=2.108
+2026-08-12 21:52:10 | INFO     | src.cluster_analysis | k=4: inertia=139288.7, silhouette=0.115, calinski_harabasz=2120.5, davies_bouldin=2.086
+2026-08-12 21:52:12 | INFO     | src.cluster_analysis | k=5: inertia=132331.9, silhouette=0.119, calinski_harabasz=1873.6, davies_bouldin=1.947
+2026-08-12 21:52:13 | INFO     | src.cluster_analysis | k=6: inertia=126155.3, silhouette=0.103, calinski_harabasz=1721.0, davies_bouldin=1.980
+2026-08-12 21:52:13 | INFO     | src.risk_scoring | Loading XGBoost pipeline from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:13 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\models\xgboost_model.joblib
+2026-08-12 21:52:14 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\threshold_analysis.joblib
+2026-08-12 21:52:14 | INFO     | src.risk_scoring | RiskScoringEngine ready: model=XGBoost, decision_threshold=0.20
+2026-08-12 21:52:14 | INFO     | src.segment_profiles | Assigned data-driven segment names: {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:52:14 | INFO     | src.segmentation_engine | SegmentationEngine fit complete: 4 segments -> {1: 'High Risk Borrowers', 3: 'Prime Borrowers', 2: 'Credit Rebuilders', 0: 'Moderate Risk Borrowers'}
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 1 outlier values in 'installment' to [-662.33, 1457.88].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 2863 outlier values in 'delinq_2yrs' to [0.00, 0.00].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 33 outlier values in 'open_acc' to [-13.00, 36.00].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 120 outlier values in 'pub_rec' to [-3.00, 4.00].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 257 outlier values in 'revol_bal' to [-31764.75, 55430.75].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 11 outlier values in 'total_acc' to [-27.00, 78.00].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 8 outlier values in 'mort_acc' to [-9.00, 12.00].
+2026-08-12 21:52:14 | INFO     | src.cluster_analysis | Clipped 2892 outlier values in 'pub_rec_bankruptcies' to [0.00, 0.00].
+2026-08-12 21:52:14 | INFO     | src.utils | Loaded serialized object from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\reports\feature_importance.joblib
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_train.csv — shape=(15200, 139)
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_val.csv — shape=(3258, 139)
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\X_test.csv — shape=(3258, 139)
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_train.csv — shape=(15200, 1)
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_val.csv — shape=(3258, 1)
+2026-08-12 21:54:41 | INFO     | src.utils | Loaded dataframe from C:\Users\NJ\Desktop\Purdue oMBA\MGMT 59000 AI\EvanApp\mgmt590_capstone\data\splits\y_test.csv — shape=(3258, 1)

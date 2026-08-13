@@ -108,13 +108,19 @@ def get_segmentation_engine() -> Optional[SegmentationEngine]:
     Load and fit (once, cached for the app's lifetime) a
     `SegmentationEngine` on the Phase 1 training split. Returns None if
     the training split isn't available yet.
+
+    The engine's internal `RiskScoringEngine` is injected so segment risk
+    tiers and supervised-model comparisons derive from the SAME resolved
+    production model as the rest of the app (not the config fallback).
+    If the model artifacts aren't available yet, `get_risk_engine` returns
+    None and `SegmentationEngine` lazily falls back to its own default.
     """
     try:
         X_train, _, _, y_train, _, _ = load_splits_cached()
     except FileNotFoundError as exc:
         logger.warning("Could not load splits for SegmentationEngine: %s", exc)
         return None
-    engine = SegmentationEngine()
+    engine = SegmentationEngine(risk_scoring_engine=get_risk_engine(get_production_model_key()))
     engine.fit(X_train, default_flags=y_train)
     return engine
 
@@ -193,6 +199,32 @@ def load_phase3_reports() -> Dict[str, object]:
     except FileNotFoundError as exc:
         logger.warning("Phase 3 reports not fully available: %s", exc)
         return {}
+
+
+@st.cache_data(show_spinner=False)
+def get_production_model_key() -> str:
+    """
+    Resolve the app's production scoring model from the Phase 3 comparison
+    table: the row with the highest TEST ROC-AUC (see
+    `model_utils.resolve_production_model_key`). Cached so every page
+    resolves the SAME model for the session's lifetime.
+
+    Reads only the small comparison-table CSV -- deliberately not
+    `load_phase3_reports()` (which loads every Phase 3 joblib to get one
+    string). Falls back to `config.PRODUCTION_MODEL_KEY` when the table
+    hasn't been generated yet. Like `load_phase3_reports`, the cache does
+    not watch file mtime: if you retrain, restart the app so the session
+    picks up the new winner.
+    """
+    try:
+        comparison_table = pd.read_csv(config.MODEL_COMPARISON_TABLE_PATH)
+    except FileNotFoundError:
+        logger.warning(
+            "Comparison table not found at %s; using fallback production model %r.",
+            config.MODEL_COMPARISON_TABLE_PATH, config.PRODUCTION_MODEL_KEY,
+        )
+        return config.PRODUCTION_MODEL_KEY
+    return model_utils.resolve_production_model_key(comparison_table)
 
 
 @st.cache_resource(show_spinner=False)
@@ -336,7 +368,8 @@ def render_model_selector() -> str:
     """
     Render the sidebar's model-selection control, backed by
     `st.session_state["selected_model_key"]` so every page reads the
-    same choice. Defaults to `config.PRODUCTION_MODEL_KEY`.
+    same choice. Defaults to the resolved production model
+    (`get_production_model_key`).
 
     Returns
     -------
@@ -344,7 +377,7 @@ def render_model_selector() -> str:
         The currently selected model key.
     """
     if "selected_model_key" not in st.session_state:
-        st.session_state["selected_model_key"] = config.PRODUCTION_MODEL_KEY
+        st.session_state["selected_model_key"] = get_production_model_key()
 
     label = st.sidebar.selectbox(
         "Scoring Model", options=MODEL_KEYS, format_func=lambda k: MODEL_LABELS[k],

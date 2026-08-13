@@ -170,7 +170,9 @@ scikit-learn `Pipeline` alongside each classifier -> hyperparameter
 tuning (`GridSearchCV` for Logistic Regression, `RandomizedSearchCV` for
 Random Forest/XGBoost) with Stratified 5-fold cross-validation,
 optimizing ROC-AUC -> full evaluation-metric suite on a held-out test
-set -> the best model by test ROC-AUC becomes `config.PRODUCTION_MODEL_KEY`.
+set -> the model with the highest test ROC-AUC is resolved from the
+comparison table at app runtime as the production scorer
+(`config.PRODUCTION_MODEL_KEY` is only the offline fallback).
 
 Full methodology, metric definitions, and business rationale for every
 choice live in `notebooks/MGMT590_LendingClub_Modeling_Phase3.ipynb` and

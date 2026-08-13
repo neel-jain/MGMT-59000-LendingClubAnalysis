@@ -23,8 +23,8 @@ import streamlit as st
 import pandas as pd
 
 from common import (
-    apply_global_style, get_explainability_engine, get_segmentation_engine, load_cleaned_dataset,
-    render_missing_artifact_notice, render_page_header,
+    apply_global_style, get_explainability_engine, get_production_model_key, get_segmentation_engine,
+    load_cleaned_dataset, render_missing_artifact_notice, render_page_header,
 )
 from src import config, eda_utils, labels
 
@@ -39,7 +39,7 @@ if cleaned_df.empty:
     render_missing_artifact_notice("The borrower dataset", "python -m src.train_models")
     st.stop()
 
-model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+model_key = st.session_state.get("selected_model_key", get_production_model_key())
 explain_engine = get_explainability_engine(model_key)
 segmentation_engine = get_segmentation_engine()
 show_advanced_statistics = st.session_state.get("show_advanced_statistics", False)
@@ -157,8 +157,7 @@ else:
         )
 
         if segmentation_engine is not None:
-            from src import config
-            selected_model_key = st.session_state.get("selected_model_key", config.PRODUCTION_MODEL_KEY)
+            selected_model_key = st.session_state.get("selected_model_key", get_production_model_key())
             ml_comparison = segmentation_engine.compare_with_supervised_models(model_key=selected_model_key)
             _research_question_block(
                 "7", "Which borrower segments represent the highest lending risk, and can natural groups be observed before clustering?",

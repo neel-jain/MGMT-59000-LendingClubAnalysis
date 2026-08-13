@@ -328,6 +328,66 @@ def test_build_model_comparison_table_ranks_by_roc_auc(train_val_test_split, tmp
 
 
 # ---------------------------------------------------------------------------
+# Production-model resolution (highest TEST ROC-AUC)
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_production_model_key_returns_highest_test_roc_auc():
+    # Shuffled on purpose: the resolver must compute the max, not trust
+    # the CSV's pre-sorted rank.
+    table = pd.DataFrame({
+        "model": ["Random Forest", "Logistic Regression", "XGBoost"],
+        "roc_auc": [0.705642, 0.705998, 0.706285],
+    })
+    assert model_utils.resolve_production_model_key(table) == "xgboost"
+
+
+def test_resolve_production_model_key_reverse_maps_display_name():
+    assert model_utils.resolve_production_model_key(
+        pd.DataFrame({"model": ["Random Forest"], "roc_auc": [0.8]})
+    ) == "random_forest"
+    assert model_utils.resolve_production_model_key(
+        pd.DataFrame({"model": ["Logistic Regression"], "roc_auc": [0.8]})
+    ) == "logistic_regression"
+
+
+def test_resolve_production_model_key_tie_uses_first_occurrence():
+    table = pd.DataFrame({
+        "model": ["XGBoost", "Random Forest"],
+        "roc_auc": [0.706, 0.706],
+    })
+    assert model_utils.resolve_production_model_key(table) == "xgboost"
+
+
+def test_resolve_production_model_key_coerces_nonnumeric_roc_auc():
+    table = pd.DataFrame({
+        "model": ["XGBoost", "Random Forest"],
+        "roc_auc": ["0.8", "not-a-number"],
+    })
+    assert model_utils.resolve_production_model_key(table) == "xgboost"
+
+
+def test_resolve_production_model_key_falls_back_on_missing_roc_auc_column():
+    table = pd.DataFrame({"model": ["XGBoost"]})
+    assert model_utils.resolve_production_model_key(table) == config.PRODUCTION_MODEL_KEY
+
+
+def test_resolve_production_model_key_falls_back_on_unknown_model_name():
+    table = pd.DataFrame({"model": ["Some Future Model"], "roc_auc": [0.9]})
+    assert model_utils.resolve_production_model_key(table) == config.PRODUCTION_MODEL_KEY
+
+
+def test_resolve_production_model_key_falls_back_on_empty_table():
+    assert model_utils.resolve_production_model_key(pd.DataFrame()) == config.PRODUCTION_MODEL_KEY
+    assert model_utils.resolve_production_model_key(None) == config.PRODUCTION_MODEL_KEY
+
+
+def test_resolve_production_model_key_falls_back_on_all_nonnumeric_roc_auc():
+    table = pd.DataFrame({"model": ["XGBoost"], "roc_auc": ["not-a-number"]})
+    assert model_utils.resolve_production_model_key(table) == config.PRODUCTION_MODEL_KEY
+
+
+# ---------------------------------------------------------------------------
 # Plotting (smoke tests)
 # ---------------------------------------------------------------------------
 

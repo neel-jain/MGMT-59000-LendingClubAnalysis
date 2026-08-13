@@ -61,7 +61,7 @@ COLUMN_LABELS: Dict[str, str] = {
     "initial_list_status": "Listing Status",
     "application_type": "Application Type",
     "grade": "Credit Grade",
-    # Model-comparison / evaluation-table columns (Regression Model page)
+    # Model-comparison / evaluation-table columns (Model Explainability page)
     "rank": "Rank",
     "model": "Model",
     "accuracy": "Accuracy",
