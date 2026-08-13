@@ -1,16 +1,13 @@
-# requirements-app.txt
+# requirements.txt
 # ======================
-# Phase 6: lean, DEPLOYMENT-ONLY dependency set for running the Streamlit
-# dashboard (`streamlit run app/app.py`) against already-serialized
-# artifacts (models, preprocessing pipeline, explainability/segmentation
-# reports). Excludes everything only needed for developing the project
-# (Jupyter, notebook kernels, pytest, pyflakes) to keep the deployed
-# image/environment smaller and faster to build.
+# FULL development environment for the MGMT 590 capstone: running the
+# Streamlit dashboard (`streamlit run app/app.py`), executing the Phase 1-4B
+# notebooks, regenerating any artifact, and running the full pytest suite.
 #
-# For local development (running notebooks, the full pytest suite,
-# regenerating any Phase 1-4B artifact), use the full `requirements.txt`
-# instead. Both files are kept in sync manually since deployment
-# platforms typically install from exactly one requirements file.
+# For the lean, DEPLOYMENT-ONLY subset (the running app against already-
+# serialized artifacts), use `requirements-app.txt` instead. Both files are
+# kept in sync manually since deployment platforms typically install from
+# exactly one requirements file.
 
 # Core data handling
 pandas>=2.1,<3.0
@@ -39,3 +36,18 @@ seaborn>=0.13,<1.0
 
 # The application itself
 streamlit>=1.35,<2.0
+
+# Notebook environment (Phase 1-4B analysis notebooks + nbformat-based builders)
+jupyter>=1.0,<2.0
+notebook>=7.0,<8.0
+ipykernel>=6.29,<7.0
+
+# Testing
+pytest>=8.0,<10.0
+
+# Phase 6 dependency audit: imbalanced-learn, plotly, and python-dateutil
+# were declared since Phase 1 but never actually imported anywhere in
+# src/, app/, or tests/ -- removed here rather than left as unused dead
+# weight. See requirements-app.txt for the lean, deployment-only subset
+# (excludes jupyter/notebook/ipykernel/pytest, none of which the running
+# application needs).
